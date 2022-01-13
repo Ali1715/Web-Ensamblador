@@ -1,0 +1,2345 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no , initial-scale=1.0 , maximum-scale=1.0, minimum-scale=1.0">
+
+    <!-- Bootstrap CSS -->
+    
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+ 
+
+<link rel="stylesheet" href="stylesI.css">
+    <title>LA WEB DEL LENGUAJE ENSAMBLADOR</title>
+  </head>
+  <body>
+
+  
+  <div class="menu_bar">
+  <a href="#" class ="bt_menu"><span class="icon-list2"></span>Menu</a></div>
+  <header>
+  <nav>
+  <ul>
+  <div class="topnav scrolling-navbar fixed-top"> 
+
+   <a href="index.html">Inicio</a>
+   <!-- <a href="#Arquitectura del computador">Arquitectura</a> PARA HACER LA REFERENCIA INTERNA-->
+  <a href="#Arquitectura del computador">Arquitectura</a>
+   <a href="#Registros">Registros</a>
+  <a href="#Etiqutas">Etiquetas</a>
+  <a href="#Instrucciones">Instrucciones</a>
+  <a href="#Subrutinas">Subrutinas</a>
+   <a href="#System calls">System call</a>
+    <a href="#Operadores">Operadores</a>
+	</ul>
+	</nav>
+	
+  </header>
+
+
+ 
+   <div class="showcase">
+    <h1>LA WEB DEL LENGUAJE ENSAMBLADOR</h1>
+	<img src="lenguajeASM.jpg" class="rounded mx-auto d-block"  >
+   <div>
+   
+   <div class="container">
+   <div class="center">
+     <br>
+	   <br>
+        <h4 style="color:Tomato;"> Programación
+en Ensamblador </h1></div>
+<!-- <a name="Arquitectura del computador"> </a> PARA ENVIAR  LA REFERENCIA AQUI --->
+ <br>
+<a name="Arquitectura del computador"></a>
+<!-- TERMINA LA REFERENCIA A ARQUITECTURA AQUI-->
+
+<BR>
+<BR>
+<h2>1. Arquitectura del computador
+</h2>
+<h2>1.1.1. Modo extendido de 64 bits
+</h2>
+<p class="parrafo"><h3>El modo extendido de 64 bits es utilizado por los sistemas operativos de 64
+bits. Dentro de este modo general, se dispone de un modo de operación de
+64 bits y de un modo de compatibilidad con los modos de operación de las
+arquitecturas de 16 y 32 bits.</h3></p>
+<p></p>
+
+<p class="parrafo"><h3>En un sistema operativo de 64 bits, los programas de 64 bits se ejecutan en
+modo de 64 bits y las aplicaciones de 16 y 32 bits se ejecutan en modo de
+compatibilidad. Los programas de 16 y 32 bits que se tengan que ejecutar en
+modo real o virtual x86 no se podrán ejecutar en modo extendido si no son
+emulados.</h3></p>
+
+<!--  -->
+
+<h2>1.1.2. Modo heredado de 16 y 32 bits</h2>
+<p class="parrafo"><h3>
+    El modo heredado de 16 y 32 bits es utilizado por los sistemas operativos
+    de 16 y 32 bits. Cuando el sistema operativo utiliza los modos de 16 bits o
+    de 32 bits, el procesador actúa como un procesador x86 y solo se puede
+    ejecutar código de 16 o 32 bits. Este modo solo permite utilizar
+    direcciones de 32 bits, de manera que limita el espacio de direcciones
+    virtual a 4 GB.</h3>
+</p>
+<p class="parrafo"><h3>
+    1) 
+    Modo real: 
+    Implementa el modo de programación del Intel 8086, con algunas extensiones,
+    como la capacidad de poder pasar al modo protegido o al modo de gestión del
+    sistema. El procesador se coloca en modo real al iniciar el sistema y
+    cuando este se reinicia.
+</p>
+<p class="parrafo"><h3>
+    2) 
+    Modo protegido
+    : Este es el modo por defecto del procesador. Permite utilizar
+    características como la memoria virtual, la paginación o la computación
+    multitarea.
+</p>
+<p class="parrafo"><h3>
+    3) 
+    Modo virtual 8086
+    : Este modo permite ejecutar programas de 16 bits como tareas dentro del
+    modo protegido.
+</p>
+
+
+<!-- -->
+
+
+<h2>1.2  El modo de 64 bits</h2>
+<p  class="parrafo"><h3>
+    Los elementos que desde el punto de vista del programador son visibles en
+    este modo de operación son los siguientes:
+</p>
+<p class="parrafo"><h3>
+    1) Espacio de memoria: un programa en ejecución en este
+    modo puede acceder a un espacio de direcciones lineal de 264 bytes. El
+    espacio físico que realmente puede dirigir el procesador es inferior y
+    depende de la implementación concreta de la arquitectura.
+</p>
+<p class="parrafo"><h3>
+    2) Registros: hay 16 registros de propósito general de 64
+    bits, que soportan operaciones de byte (8 bits), Word (16 bits), double
+    word (32 bits) y quad word (64 bits).
+</p>
+<p class="parrafo"><h3>
+    • El registro contador de programa (RIP, instruction pointer register) es
+    de 64 bits.
+</p>
+<p class="parrafo"><h3>
+    • El registro de bits de estado también es de 64 bits (RFLAGS). Los 32 bits
+    de la parte alta están reservados; los 32 bits de la parte bajan son
+    accesibles y corresponden a los mismos bits de la arquitectura IA-32
+    (registro EFLAGS).
+</p>
+<p class="parrafo"><h3>
+    • Los registros de segmento en general no se utilizan en el modo de 64
+    bits.
+</p>
+
+<!--  -->
+
+<h2> 1.2.1. Organización de la memoria</h2>
+<p class="parrafo"><h3>
+    Al trabajar en un espacio lineal de direcciones, no se utilizan mecanismos
+    de segmentación de la memoria, de manera que no son necesarios los
+    registros de segmentos, excepto los registros de segmento FS y GS, que se
+    pueden utilizar como registro base en el cálculo de direcciones de los
+    modos de direccionamiento relativo.
+</p>
+<p class="parrafo"><h3>
+    Paginación: 
+    Este mecanismo es transparente para los programas de aplicación, y por lo
+    tanto para el programador, y viene gestionado por el hardware del
+    procesador y el sistema operativo.
+</p>
+<p class="parrafo"><h3>
+    Las direcciones virtuales son traducidas a direcciones físicas de memoria
+    utilizando un sistema jerárquico de tablas de traducción gestionadas por el
+    software del sistema (sistema operativo).
+</p>
+<p class="parrafo"><h3>
+    Orden de los bytes: 
+    Los procesadores x86-64 utilizan un sistema de ordenación de los bytes
+    cuando se accede a los datos que se encuentran almacenados en la
+    memoria. En concreto, se utiliza un sistema little-endian, en el cual el
+    byte de menos peso de un dato ocupa la dirección más baja de memoria.
+</p>
+<p class="parrafo"><h3>
+    Tamaño de las direcciones: 
+    Los programas que se ejecutan en el modo de 64 bits generan directamente
+    direcciones de 64 bits.
+</p>
+<p class="parrafo"><h3>
+    Modo compatibilidad:
+    Los programas que se ejecutan en el modo compatibilidad generan direcciones
+    de 32 bits. Estas direcciones son extendidas añadiendo ceros a los 32 bits
+    más significativos de la dirección. Este proceso es gestionado por el
+    hardware del procesador y es transparente para el programador.
+</p>
+<p class="parrafo"><h3>
+    
+        Tamaño de los desplazamientos y de los valores inmediatos:
+    
+    En el modo de 64 bits los desplazamientos utilizados en los
+    direccionamientos relativos y los valores inmediatos son siempre de 32
+    bits, pero vienen extendidos a 64 bits manteniendo el signo. Hay una
+    excepción a este comportamiento: en la instrucción MOV se permite
+    especificar un valor inmediato de 64 bits.
+</p>
+
+<!-- <a name="Registros"> </a> PARA ENVIAR  LA REFERENCIA AQUI --->
+ <p></p>
+<a name="Registros"></a>
+<!-- TERMINA LA REFERENCIA A ARQUITECTURA AQUI-->
+ <BR>
+ <BR>
+<h2>1.2.2. Registros
+</h2>
+<p class="parrafo"><h3>Los procesadores de la arquitectura x86-64 disponen de un banco de registros
+formado por registros de propósito general y registros de propósito específico.</h3></p>
+<p></p>
+
+<p class="parrafo"><h3>Registros de propósito general hay 16 de 64 bits y de propósito específico hay
+6 registros de segmento de 16 bits, también hay un registro de estado de 64
+bits (RFLAGS) y un registro contador de programa también de 64 bits (RIP).</h3></p>
+
+<!-- -->
+
+<h2>Registros de propósito general
+</h2>
+<p class="parrafo"><h3>Son 16 registros de datos de 64 bits (8 bytes): RAX, RBX, RCX, RDX, RSI, RDI,
+RBP, RSP y R8-R15</h3></p>
+<p></p>
+
+<p class="parrafo"><h3>Los 8 primeros registros se denominan de manera parecida a los 8 registros de
+propósito general de 32 bits disponibles en la arquitectura IA-32 (EAX, EBX,
+ECX, EDX, ESI, EDI, EBP y ESP).</h3></p>
+<p></p>
+<p class="parrafo"><h3>Los registros son accesibles de cuatro maneras diferentes:
+</h3></p>
+<p></p>
+<p class="parrafo"><h3>1) Como registros completos de 64 bits (quad word).</h3></p>
+<p></p>
+<p class="parrafo"><h3>2) Como registros de 32 bits (double word), accediendo a los 32 bits de menos
+peso</h3></p>
+<p></p>
+<p class="parrafo"><h3>3) Como registros de 16 bits (word), accediendo a los 16 bits de menos peso.</h3></p>
+<p></p>
+<p class="parrafo"><h3>4) Como registros de 8 bits (byte), permitiendo acceder individualmente a uno
+o dos de los bytes de menos peso según el registro.</h3></p>
+<p></p>
+<p class="parrafo"><h3>El acceso a registros de byte tiene ciertas limitaciones según el registro. A continuación se presenta la nomenclatura que se utiliza según si se quiere acceder
+a registros de 8, 16, 32 o 64 bits y según el registro.
+</h3></p>
+<p></p>
+<div class="img1" >
+<img src="registros.png" class="rounded mx-auto d-block"  >
+</div>
+<p></p> 
+<p class="parrafo"><h3>Limitaciones en el uso de los registros de propósito general:
+</h3></p>
+<p></p>
+<p class="parrafo"><h3>
+• En una misma instrucción no se puede usar un registro del conjunto AH,
+BH, CH, DH junto con uno del conjunto SIL, DIL, BPL, SPL, R8B – R15B.
+
+</h3></p>
+<p class="parrafo"><h3>
+
+• Registro RSP: tiene una función especial, funciona como apuntador de pila, contiene siempre la dirección del primer elemento de la pila. Si lo utilizamos con otras finalidades, perderemos el acceso a la pila.
+
+</h3></p>
+<p class="parrafo"><h3>
+
+• Registro RSP: tiene una función especial, funciona como apuntador de pila, contiene siempre la dirección del primer elemento de la pila. Si lo utilizamos con otras finalidades, perderemos el acceso a la pila.
+• Cuando se utiliza un registro de 32 bits como operando destino de una
+instrucción, la parte alta del registro está fijada en 0.
+</h3></p>
+<p></p>
+<h2>Registros de propósito específico
+</h2>
+<h2>1)Registros de segmento: hay 6 registros de segmento de 16 bits.
+</h2>
+<p class="parrafo"><h3>En el modo de 64 de bits, estos registros prácticamente no se utilizan, ya que
+se trabaja con el modelo de memoria lineal y el valor de estos registros se encuentra fijado en 0 (excepto en los registros FS y GS, que pueden ser utilizados
+como registros base en el cálculo de direcciones).</h3></p>
+<p></p>
+<h2>2)Registro de instrucción o instruction pointer(RIP)
+</h2>
+<p class="parrafo"><h3>Es un registro de 64 bits que actúa como registro contador de programa (PC) y contiene la dirección efectiva (o dirección lineal) de la instrucción siguiente que se ha de ejecutar</h3></p>
+<p></p>
+<h2>3)Registro de estado o Flags register(RFLAGS)
+</h2>
+<p class="parrafo"><h3>contiene información sobre el estado del procesador e información sobre el
+resultado de la ejecución de las instrucciones.</p>
+<p></p>
+<h2>3.2.1. Definición de constantes
+</h2>
+<p class="parrafo"><h3>Realmente una constante es un nombre que se
+da para referirse a un valor determinado y quee no puede ser modificado por ninguna instrucción del código.
+</p>
+<p></p>
+<p class="parrafo"><h3>La declaración de constantes se puede hacer en cualquier parte del programa:
+al principio del programa fuera de las secciones .data, .bss, .text o dentro de
+cualquiera de las secciones anteriores.
+</p>
+<p></p>
+<p class="parrafo"><h3>Para definir constantes se utiliza la directiva equ, de la manera siguiente:
+</p>
+<p></p>
+<p class="parrafo"><h3>nombre_constante equ valor
+</p>
+<p></p>
+<p class="parrafo"><h3>Ejemplos de definiciones de constantes:
+</p>
+<p></p>
+<p class="parrafo"><h3>tamañoVec equ 5
+</p>
+<p class="parrafo"><h3>ServicioSO equ 80h
+</p>
+<p class="parrafo"><h3>Mensaje1 equ 'Hola'
+</p>
+<p></p>
+<h2>3.2.2. Definición de variables
+</h2>
+<p class="parrafo"><h3>La declaración de variables en un programa en ensamblador se puede incluir
+en la sección .data o en la sección .bss, según el uso de cada una.
+</p>
+<p></p>
+<h2>Sección .data, variables inicializadas
+</h2>
+<p class="parrafo"><h3>• db: define una variable de tipo byte, 8 bits
+</p>
+<p class="parrafo"><h3>• dw: define una variable de tipo palabra (word), 2 bytes = 16 bits.
+</p>
+<p class="parrafo"><h3>• dd: define una variable de tipo doble palabra (double word), 2 palabras =4 bytes = 32 bits.
+</p>
+<p class="parrafo"><h3>• dq: define una variable de tipo cuádruple palabra (quad word), 4 palabras= 8 bytes = 64 bits.
+</p>
+<p></p>
+<p class="parrafo"><h3>Ejemplos:
+</p>
+<p></p>
+<p class="parrafo"><h3>Los valores hexadecimales han de empezar por 0x, 0h o $, o deben finalizarcon una h.
+</p>
+<p class="parrafo"><h3>    -> var1 db 255 ; define una variable con el valor FFh
+</p>
+<p class="parrafo"><h3>    -> Var2 dw 65535 ; en hexadecimal FFFFh
+</p>
+<p class="parrafo"><h3>    -> var4 dd 4294967295 ; en hexadecimal FFFFFFFFh
+</p>
+<p class="parrafo"><h3>    -> var8 dq 18446744073709551615 ; en hexadecimal FFFFFFFFFFFFFFFFh
+</p>
+<p></p>
+
+<p></p>
+<p class="parrafo"><h3>Los valores numéricos se consideran por defecto en decimal, pero también se
+puede indicar explícitamente que se trata de un valordecimal finalizando el
+número con el carácter d</h3>
+</p>
+<p></p>
+<p class="parrafo"><h3>    -> var db 67 ;el valor 67 decimal</h3>
+<p></p>
+<p class="parrafo"><h3>Los valores binarios han de empezar por 0b o finalizar con el carácter b<h3>
+</p>
+<p></p>
+<p class="parrafo"><h3>    -> var db 0b01000011</h3>
+<p class="parrafo"><h3>    -> var dw 0110_0100_0011b</h3>
+<p></p>
+<p class="parrafo"><h3>Los caracteres y las cadenas de caracteres han de escribirse entre comillas
+simples (''), dobles ("") o comillas abiertas backquotes (` `)</h3>
+<p></p>
+<p class="parrafo"><h3>Las cadenas de caracteres (strings) se definen de la misma manera:</h3>
+<p></p>
+<p class="parrafo"><h3>    -> cadena db 'Hola' ;define una cadena formada por 4 caracteres</h3>
+<p></p>
+<p class="parrafo"><h3>Los vectores en ensamblador se definen con un nombre de variable e indicando a continuación los valores que forman el vector.</h3>
+<p></p> 
+<p class="parrafo"><h3>    -> vector1 db 23, 42, -1, 65, 14 ;vector formado por 5 valores de tipo byte</h3>
+<p></p>
+<h2>Sección .bss, variables no inicializadas
+</h2>
+<p></p>
+<p class="parrafo"><h3>Dentro de esta sección se declaran y se reserva espacio para las variables de
+nuestro programa para las cuales no queremos dar un valor inicial.
+</h3>
+<p></p>
+<p class="parrafo"><h3>• resb: reserva espacio en unidades de byte</h3>
+<p></p>
+<p class="parrafo"><h3>• resw: reserva espacio en unidades de palabra, 2 bytes</h3>
+<p></p>
+<p class="parrafo"><h3>• resd: reserva espacio en unidades de doble palabra, 4 bytes</h3>
+<p></p>
+<p class="parrafo"><h3>• resq: reserva espacio en unidades de cuádruple palabra, 8 bytes</h3>
+<p></p>
+<p class="parrafo"><h3>Ejemplos</h3>
+<p></p>
+<p class="parrafo"><h3>section .bss</h3>
+<p></p>
+<p class="parrafo"><h3>var1 resb 1 ;reserva 1 byte</h3>
+<p></p>
+<p class="parrafo"><h3>var2 resb 4 ;reserva 4 bytes</h3>
+<p></p>
+<p class="parrafo"><h3>var3 resw 2 ;reserva 2 palabras = 4 bytes, equivalente al caso anterior</h3>
+<p></p>
+<p class="parrafo"><h3>var3 resd 1 ;reserva una cuádruple palabra = 4 bytes, equivalente a los dos casos anteriores
+</h3>
+<p></p>
+
+<!-- -->
+<a name="Etiqutas"></a>
+<!-- TERMINA LA REFERENCIA A ARQUITECTURA AQUI-->
+<h2>3. El lenguaje de ensamblador para la arquitectura x86-64 </h2>
+<h2>3.3  Formato de la instrucciones 
+</h2>
+<h2>3.3.1. 	Etiquetas </h2>
+<p class="parrafo"><h3>Una etiqueta hace referencia a un elemento dentro del programa ensamblador.
+Su función es facilitar al programador la tarea de hacer referencia a diferentes
+elementos del programa. Las etiquetas sirven para definir constantes, variables
+o posiciones del código y las utilizamos como operandos en las instrucciones
+o directivas del programa.</h3></p>
+<p></p>
+
+<p class="parrafo"><h3>EJEMPLO:</h3></p>
+  
+   <img src="Etiquetas.jpg" class="rounded mx-auto d-block" style="width:25%; height:auto;" >
+   
+   
+   <h2>3.4  Juego de instrucciones y modos de direccionamiento
+</h2>
+<h2> 3.4.1. Tipos de operandos de las instrucciones x86-64</h2>
+<h2>Operandos fuente y destino </h2>
+<p class="parrafo"><h3>En las instrucciones con un solo operando, este se puede comportar solo como operando fuente, solo como operando destino o como operando fuente
+y destino.
+</h3></p>
+<p></p>
+<p class="parrafo"><h3>EJEMPLO:</h3></p>
+
+<p class="parrafo"><h3>push rax</h3></p>
+
+<p class="parrafo"><h5>El registro rax es un operando fuente; la instrucción almacena el valor del operando
+fuente en la pila del sistema, de manera que la pila es un operando destino implícito.
+</h5></p>
+<p class="parrafo"><h3><p class="parrafo"><h3>En las instrucciones con dos operandos, el primer operando se puede comportar como operando fuente y/o destino, mientras que el segundo operando se
+comporta siempre como operando fuente.
+</h3></p>
+<p class="parrafo"><h3>EJEMPLO:</h3></p>
+<p class="parrafo"><h3>mov rax, rbx</h3></p>
+<p class="parrafo"><h5>El primer operando se comporta solo como operando destino; la instrucción almacena
+el valor indicado por el segundo operando en el primer operando (rax = rbx).
+</h5></p>
+<h2>Localización de los operandos</h2>
+<p class="parrafo"><h3>1. Inmediatos: En las instrucciones de dos operandos, se puede utilizar un
+valor inmediato como operando fuente; algunas instrucciones de un operando
+también admiten un valor inmediato como operando. Los valores inmediatos
+se pueden expresar como valores numéricos (decimal, hexadecimal, octal o
+binario) o como caracteres o cadenas de caracteres. También se pueden utilizar
+las constantes definidas en el programa como valores inmediatos.</h3></p>
+<p class="parrafo"><h3>EJEMPLO:</h3></p>
+<p class="parrafo"><h5>mov al, 10 b ;un valor inmediato expresado en binario</h5></p>
+
+<p class="parrafo"><h3>2. Registros: Los registros se pueden utilizar como operando fuente y como
+operando destino. Podemos utilizar registros de 64 bits, 32 bits, 16 bits y 8
+bits. Algunas instrucciones pueden utilizar registros de manera implícita.</h3></p>
+<p class="parrafo"><h3>EJEMPLO:</h3></p>
+<p class="parrafo"><h3>mov al, 100 </h3></p>
+
+<p class="parrafo"><h3>3.Memoria: Las variables declaradas a memoria se pueden utilizar como operandos fuente y destino. En el caso de instrucciones con dos operandos,solo uno de los operandos puede acceder a la memoria, el otro ha de ser un
+registro o un valor inmediato (y este será el operando fuente).</h3></p>
+<p class="parrafo"><h3>EJEMPLO:</h3></p>
+<p class="parrafo"><h5> mov rax, var1 ;se carga en rax la dirección de la variable var</h5></p>
+
+<h2>Tamaño de los operandos</h2>
+<p class="parrafo"><h3>BYTE: indica que el tamaño del operando es de un byte (8 bits).</h3></p>
+<p class="parrafo"><h3>WORD: indica que el tamaño del operando es de una palabra (word) o dos
+bytes (16 bits).</h3></p>
+<p class="parrafo"><h3>DWORD: indica que el tamaño del operando es de una doble palabra (double word) o cuatro bytes (32 bits).
+</h3></p>
+<p class="parrafo"><h3> QWORD: indica que el tamaño del operando es de una cuádruple palabra
+(quad word) u ocho bytes (64 bits)</h3></p>
+
+<h2>3.4.2. Modos de direccionamiento</h2>
+<h2>1.Inmediato:</h2>
+<p class="parrafo"><h3> En este caso, el operando hace referencia a un dato que se encuentra en la instrucción misma. No hay que hacer ningún acceso extra a memoria para obtenerlo. Solo podemos utilizar un direccionamiento inmediato
+como operando fuente. El número especificado ha de ser un valor que se pueda
+expresar con 32 bits como máximo, que será el resultado de evaluar una expresión aritmética formada por valores numéricos y operadores aritméticos y
+también sumar una dirección de memoria representada mediante una etiqueta (nombre de una variable), con la excepción de la instrucción mov cuando
+el primer operando es un registro de 64 bits, para el que podremos especificar
+un valor que se podrá expresar con 64 bits.</h3></p>
+<p class="parrafo"><h3>EJEMPLO:</h3></p>
+<p class="parrafo"><h5>mov rax, 0102030405060708h ;el segundo operando utiliza direccionamiento inmediato expresado con 64 bits.</h5></p>
+<h2>2.Directo a registro:</h2>
+<p class="parrafo"><h3> En este caso, el operando hace referencia a un dato que
+se encuentra almacenado en un registro. En este modo de direccionamiento
+podemos especificar cualquier registro de propósito general (registros de datos,
+registros índice y registros apuntadores)</h3></p>
+<p class="parrafo"><h3>EJEMPLO:</h3></p>
+<p class="parrafo"><h5>mov rax, rbx ;los dos operandos utilizan direccionamiento directo a registro, rax = rbx</h5></p>
+
+<h2>3.Directo a memoria:</h2>
+<p class="parrafo"><h3> En este caso, el operando hace referencia a un dato que
+se encuentra almacenado en una posición de memoria. El operando habrá de
+especificar el nombre de una variable de memoria entre corchetes [ ]; cabe recordar que en sintaxis NASM se interpreta el nombre de una variable sin corchetes como la dirección de la variable y no como el contenido de la variable.</h3></p>
+<p class="parrafo"><h3>EJEMPLO:</h3></p>
+<p class="parrafo"><h5>mov rax,[var] ;el segundo operando utiliza direccionamiento directo a memoria, rax = [var] </h5></p>
+<h2>4.Indirecto a registro:</h2>
+<p class="parrafo"><h3> En este caso, el operando hace referencia a un dato
+que se encuentra almacenado en una posición de memoria. El operando habrá
+de especificar un registro entre corchetes [ ]; el registro contendrá la dirección
+de memoria a la cual queremos acceder</h3></p>
+<p class="parrafo"><h3>EJEMPLO:</h3></p>
+<p class="parrafo"><h5>mov rbx, var ;se carga en rbx la dirección de la variable var</h5></p>
+
+
+
+<br>
+<br>
+<a name="Instrucciones"></a>
+<br>
+<br>
+<!--Tipos de instrucciones-->
+<h2>3.4.3 Tipos de instrucciones
+</h2>
+<P> Estas instrucciones son las siguientes: IF, ELSE, ELSE IF y END IF.</P>
+     <p>
+   
+       <strong>Sintaxis</strong>
+		</p>
+   <ol type=”A”>
+  <li>IF condition</li>
+  <li>ELSE</li>
+  <li>ELSE IF condition</li>
+  <li>END IF</li>
+</ol>
+<p>
+   <strong>Parámetros</strong>
+</p>
+<p>
+    <strong><em>condition: Una de las siguientes condiciones:</em></strong>
+</p>
+<p>
+    Una expresión absoluta = La expresión no debe contener referencias hacia delante o externas y cualquier valor que no sea cero es considerado como verdadero.
+</p>
+<p>
+    string1 = string2 = La condición es verdadera si la cadena1 y la cadena2 tienen la misma longitud y contenido.
+</p>
+<p>
+    string1 < > string2 = La condición es verdadera si la cadena1 y la cadena2 tienen distinta longitud o contenido.
+</p>
+<p>
+   <strong>Descripción</strong>
+</p>
+<p>
+    Utilice las directivas IF, ELSE y ENDIF para controlar el proceso de ensamblado en el tiempo de ensamblado. Si la condición que sigue a la directiva IF no es verdadera, las siguientes instrucciones no generarán ningún código hasta que se encuentre alguna directiva ELSE o ENDIF.
+</p>
+<p>
+    Utilice ELSEIF para introducir una nueva condición después de la directiva IF. Las directivas de ensamblador condicionales pueden usarse en cualquier sitio en el ensamblado, pero tienen su mayor uso en conjunción con los procesos de macros.
+</p>
+<p>
+    Todas las directivas de ensamblador (excepto END) así como la inclusión de archivos puede ser deshabilitada por las directivas condicionales. Cada directiva IF debe acabar con una directiva ENDIF. La directiva ELSE es opcional, y si se usa, debe estar en un bloque IF ... ENDIF. Los bloques IF ... ENDIF e IF ... ELSE ... ENDIF pueden estar anidados a cualquier nivel.
+</p>
+<p>
+   <strong>Ejemplos</strong>
+</p>
+
+<p>
+	La siguiente macro resta una constante del par de registros R25:R24.
+</p>
+
+<p>
+	subW       MACRO         c  </p>
+             <p>   IF                   c<64</p>
+             <p>  SBIW             R25:R24, c</p>
+             <p>  ELSE </p>
+             <p>  SUBI              R24, LOW(c)</p>
+             <p>  SBCI              R25, c >> 8</p>
+             <p>  ENDIF </p>
+             <p>  ENDM </p>
+
+
+
+<p>
+	Si el argumento de la macro es menor que 64, es posible usar la instrucción SBIW para salvar dos bytes de memoria de código.
+</p>
+<h2>Estructura while
+</h2>
+<p>Estructura iterativa controlada por una condición expresada al principio:
+</p>
+<p>while (condiciones) </p>
+<p>{
+ bloque de sentencias que ejecutar
+}
+</p>
+<p>Ejemplo
+</p>
+<p> mov rax, 1 ;rax será [resultado]</p>
+ <p>mov rbx, qword [num] ;Se carga la variable en un registro</p>
+<p>while: </p>
+ <p>cmp rbx, 1 ;Se hace la comparación </p>
+ <p>jg cierto ;Si se cumple la condición (num > 1) salta a cierto </p>
+ <p>jmp fin ;Si no, salta a fin </p>
+<p>cierto: </p>
+<p> imul rax, rbx ;rax = rax * rbx </p>
+<p> dec rbx </p>
+ <p>jmp while </p>
+<p>fin: </p>
+<p> mov qword [resultado], rax </p>
+<p>mov qword [num], rbx 
+</p>
+<h2> Estructura do-while
+</h2>
+<p>Estructura iterativa controlada por una condición expresada al final:
+</p>
+<p>Ejemplo
+</p>
+<p>mov rax, 1 ;rax será [resultado]</p>
+ <p>mov rbx, qword [num] ;Se carga la variable en un registro</p>
+<p>while:</p>
+ <p>imul rax, rbx</p>
+ <p>dec rbx</p>
+<p> cmp rbx, 1 ;Se hace la comparación</p>
+ <p>jg while ;Si se cumple la condición salta a while</p>
+ <p>mov qword [resultado], rax</p>
+<p> mov qword [num], rbx</p>
+</p>
+<h2>Estructura for
+</h2>
+<p>Estructura iterativa, que utiliza la orden for:
+</p>
+<p>Ejemplo
+</p>
+<p>mov rax, 1 ;rax será [resultado]</p>
+<p> mov rcx, qword [num] ;rcx será [i] que inicializamos con [num]</p>
+ 
+<p>for:</p>
+ <p>cmp rcx, 1 ;Se hace la comparación</p>
+<p> jg cierto ;Si se cumple la condición, salta a cierto</p>
+<p> jmp fin</p>
+<p>cierto:</p>
+<p> imul rax,rcx</p>
+<p> dec rcx</p>
+<p> jmp for</p>
+<p>fin:</p>
+<p> mov qword [resultado], rax</p>
+<p> mov qword [i], rcx</p>
+
+</p>
+<p>Al salir de la estructura iterativa, no actualizamos la variable num porque se
+utiliza para inicializar i pero no se cambia.
+
+
+
+<!-- -->
+
+<!-- DEF SUBRUTINAS-->
+<br>
+<br>
+<a name="Subrutinas"></a>
+<br>
+<br>
+
+<h2> 5.4.1. Definicion de subrutinas en ensamblador</h2>
+    <p class="parrafo"><h3>
+   
+        5.4.1. Definicion de subrutinas en ensamblador
+   
+</p>
+<p class="parrafo"><h3>
+    Una subrutina puede necesitar que se le transfieran parámetros; los
+    parámetros se pueden pasar mediante registros o la pila. Sucede lo mismo
+    con el re[1]torno de resultados, que puede efectuarse por medio de registro
+    o de la pila. Consideraremos los casos en los que el número de parámetros
+    de entrada y de retorno de una subrutina es fijo. Paso de parámetros y
+    retorno de resultado por medio de registros Debemos definir sobre qué
+    registros concretos queremos pasar parámetros a la subrutina y sobre qué
+    registros haremos el retorno; podemos utilizar cualquier registro de
+    propósito general del procesador. Una vez definidos los registros que
+    utilizaremos para hacer el paso de parámetros, deberemos asignar a cada uno
+    el valor que queremos pasar a la subrutina antes de hacer call; para
+    devolver los valores, dentro de la subrutina, tendremos que asignar a los
+    registros correspondientes el valor que se debe devolver antes de hacer
+    ret. Recordemos que los registros que se utilicen para devolver un valor no
+    se han de almacenar en la pila al inicio de la subrutina, ya que no hay que
+    conservar el valor inicial. Supongamos que en el ejemplo del factorial
+    queremos pasar como parámetro un número cuyo factorial queremos calcular, y
+    devolver como resultado el factorial del número transferido como parámetro,
+    implementando el paso de parámetros y el retorno de resultados por medio de
+    registros. El número cuya factorial queremos calcular lo pasaremos por
+    medio del registro RBX y devolveremos el resultado al registro RAX. La
+    llamada de la subrutina será:
+</p>
+<p class="parrafo"><h3>
+    mov rbx, 5
+</p>
+<p class="parrafo"><h3>
+    call factorial
+</p>
+<p class="parrafo"><h3>
+    ;En rax tendremos el valor del factorial de 5 (=120)
+</p>
+<p class="parrafo"><h3>
+    Subrutina:
+</p>
+<p class="parrafo"><h3>
+    factorial:
+</p>
+<p class="parrafo"><h3>
+    push rbx ; Almacenar en la pila el registro que modificamos
+</p>
+<p class="parrafo"><h3>
+    ; y que no se utiliza para devolver el resultado.
+</p>
+<p class="parrafo"><h3>
+    ; Instrucciones de la subrutina
+</p>
+<p class="parrafo"><h3>
+    mov rax, 1 ; rax será el resultado
+</p>
+<p class="parrafo"><h3>
+    while:
+</p>
+<p class="parrafo"><h3>
+    imul rax, rbx
+</p>
+<p class="parrafo"><h3>
+    dec rbx cmp rbx, 1 ; Se hace la comparación
+</p>
+<p class="parrafo"><h3>
+    jg while ; Si se cumple la condición salta a while
+</p>
+<p class="parrafo"><h3>
+    ; En rax tendremos el valor del factorial de rbx
+</p>
+<p class="parrafo"><h3>
+    pop rbx ; Restauramos el valor inicial del registro
+</p>
+<p class="parrafo"><h3>
+    ret
+</p>
+<p class="parrafo"><h3>
+    Paso de parámetros y retorno de resultado por medio de la pila Si queremos
+    pasar parámetros y devolver resultados a una subrutina utilizando la pila,
+    y una vez definidos los parámetros que queremos pasar y los que queremos
+    retornar, hay que hacer lo siguiente: 1) Antes de hacer la llamada a la
+    subrutina: es necesario reservar espacio en la pila para los datos que
+    queremos devolver y a continuación introducir los parámetros necesarios en
+    la pila. 2)Dentro de la subrutina: hay que acceder a los parámetros
+    leyéndolos di[1]rectamente de memoria, utilizando un registro que apunté a
+    la cima de la pila. El registro apuntador de pila, RSP, siempre apunta a la
+    cima de la pila y, por lo tanto, podemos acceder al contenido de la pila
+    haciendo un direccionamiento a memoria que utilice RSP, pero si utilizamos
+    la pila dentro de la subrutina, no se recomienda utilizarlo. El registro
+    que se suele utilizar como apuntador para acceder a la pila es el registro
+    RBP. Antes de utilizarlo, lo tendremos que almacenar en la pila para poder
+    recuperar el valor inicial al final de la subrutina, a continuación, se
+    carga en RBP el valor de RSP. RBP no se debe cambiar dentro de la
+    subrutina; al final de esta se copia el valor sobre RSP para restaurar el
+    valor inicial. 3) Después de ejecutar a subrutina: una vez fuera de la
+    subrutina es necesario liberar el espacio utilizado por los parámetros de
+    entrada y después recuperar los resultados del espacio que hemos reservado
+    antes de hacer la llamada. CC-BY-SA • PID_00178132 75 Programación en
+    ensamblador (x86-64) Supongamos que en el ejemplo de la factorial queremos
+    pasar como parámetro el número cuyo factorial queremos calcular y devolver
+    como resultado el factorial del número pasado como parámetro, implementando
+    el paso de parámetros y el retorno de resultados por medio de la pila.
+</p>
+<p class="parrafo"><h3>
+    La llamada de la subrutina:
+</p>
+<p class="parrafo"><h3>
+    sub rsp,8 ; Reservamos 8 bytes para el resultado que devolvemos
+</p>
+<p class="parrafo"><h3>
+    mov rbx, 5
+</p>
+<p class="parrafo"><h3>
+    push rbx; Introducimos el parámetro de entrada en la pila
+</p>
+<p class="parrafo"><h3>
+    call factorial
+</p>
+<p class="parrafo"><h3>
+    add rsp,8 ; Liberamos el espacio utilizado por el parámetro de entrada
+</p>
+<p class="parrafo"><h3>
+    pop rax ; Recuperamos el resultado devuelto sobre el registro rax
+</p>
+<p class="parrafo"><h3>
+    Variables locales En los lenguajes de alto nivel es habitual definir
+    variables locales dentro de las funciones definidas en un programa. Las
+    variables locales ocupan un espacio definido dentro de la pila. Ahora
+    veremos cómo reservar espacio para variables locales en subrutinas
+    definidas en ensamblador. Para reservar el espacio necesario, hemos de
+    saber cuántos bytes utilizaremos como variables locales. A continuación, es
+    necesario decrementar el valor del apuntador a pila RSP tantas unidades
+    como bytes se quieran reservar para las variables locales; de esta manera,
+    si utilizamos las instrucciones que trabajan con la pila dentro de la
+    subrutina (push y pop) no sobrescribiremos el espacio de las variables
+    locales. La actualización de RSP se hace justo después de actualizar el
+    registro que utilizamos para acceder a la pila, RBP.
+</p>
+<p class="parrafo"><h3>
+    subrutina:
+</p>
+<p class="parrafo"><h3>
+    push rbp ; Almacenar el registro que utilizaremos
+</p>
+<p class="parrafo"><h3>
+    ; de apuntador a la pila rbp
+</p>
+<p class="parrafo"><h3>
+    mov rbp, rsp ; Asignar a RBP el valor del registro apuntador RSP
+</p>
+<p class="parrafo"><h3>
+    sub rsp, n ; n indica el número de bytes reservados para las
+</p>
+<p class="parrafo"><h3>
+    ; variables locales
+</p>
+<p class="parrafo"><h3>
+    ;
+</p>
+<p class="parrafo"><h3>
+    ; Instrucciones de la subrutina
+</p>
+<p class="parrafo"><h3>
+    mov rsp, rbp ; Restauramos el valor inicial de RSP con
+</p>
+<p class="parrafo"><h3>
+    RBP
+</p>
+<p class="parrafo"><h3>
+    pop rbp ; Restauramos el valor inicial de RBP
+</p>
+<p class="parrafo"><h3>
+    ret
+</p>
+<p class="parrafo"><h3>
+    Como las variables locales están en la pila, se utiliza también el registro
+    apuntador RBP para acceder a las variables. Se utiliza un direccionamiento
+    indexado sobre el registro RBP para acceder al espacio reservado, restando
+    un valor al registro RSP.
+</p>
+<p class="parrafo"><h3>
+    Ejemplo
+</p>
+<p class="parrafo"><h3>
+    push rbp ;Almacenar el registro que utilizaremos
+</p>
+<p class="parrafo"><h3>
+    ;de apuntador a la pila rbp
+</p>
+<p class="parrafo"><h3>
+    mov rbp, rsp ;Asignar a RBP el valor del registro apuntador RSP
+</p>
+<p class="parrafo"><h3>
+    sub rsp, 8 ;reservamos 8 bytes para variables locales
+</p>
+<p class="parrafo"><h3>
+    mov al, byte[RBP-1] ;accedemos a 1 byte de almacenamiento local
+</p>
+<p class="parrafo"><h3>
+    mov ax, word[RBP-2] ;accedemos a 2 bytes de almacenamiento local
+</p>
+<p class="parrafo"><h3>
+    mov eax, dword[RBP-4] ;accedemos a 4 bytes de almacenamiento local
+</p>
+<p class="parrafo"><h3>
+    mov rax, qword[RBP-8] ;accedemos a 8 bytes de almacenamiento local
+</p>
+<!-- -->
+<h2> 5.4.2.  LLamada y retorno de subrutina</h2>
+     <p class="parrafo"><h3>
+    
+        5.4.2. LLamada y retorno de subrutina</p>
+    <p class="parrafo"><h3>
+    5.4.2. Llamada y retorno de subrutina
+</p> 
+<p class="parrafo"><h3>
+    Para hacer la llamada a la subrutina se utiliza la instrucción call y se
+    indica la etiqueta que define el punto de entrada a la subrutina:
+</p>
+<p class="parrafo"><h3>
+   call factorial
+</p></h3>
+<p class="parrafo"><h3>
+    La instrucción call almacena en la pila la dirección de retorno (la
+    dirección de la instrucción que se encuentra a continuación de la
+    instrucción call) y entonces transfiere el control del programa a la
+    subrutina, cargando en el registro RIP la dirección de la primera
+    instrucción de la subrutina. Funcionalmente, la instrucción call anterior
+    sería equivalente a:
+</p>
+<p class="parrafo"><h3>
+    sub rsp, 8
+</p>
+<p class="parrafo"><h3>
+    mov qword[rsp], rip
+</p>
+<p class="parrafo"><h3>
+    mov rip, factorial
+</p>
+<p class="parrafo"><h3>
+    Para finalizar la ejecución de la subrutina, ejecutaremos la instrucción
+    ret, que recupera de la pila la dirección del registro RIP que hemos
+    almacenado al hacer call y la carga otra vez en el registro RIP; continúa
+    la ejecución del programa con la instrucción que se encuentra después de
+    call. Funcionalmente, la instrucción ret sería equivalente a:
+</p>
+<p class="parrafo"><h3>
+    mov rip, qword[rsp]
+</p>
+<p class="parrafo"><h3>
+    add rsp, 8
+</p>
+
+
+<!-- -->
+<h2> 5.4.3. Paso de parámetros a la subrutina y retorno de    resultados </h2>
+     <p class="parrafo"><h3>
+    
+        5.4.3. Paso de parámetros a la subrutina y retorno de resultados
+    
+</p>
+<p class="parrafo"><h3>
+    Una subrutina puede necesitar que se le transfieran parámetros; los
+    parámetros se pueden pasar mediante registros o la pila. Sucede lo mismo
+    con el re[1]torno de resultados, que puede efectuarse por medio de registro
+    o de la pila. Consideraremos los casos en los que el número de parámetros
+    de entrada y de retorno de una subrutina es fijo. Paso de parámetros y
+    retorno de resultado por medio de registros Debemos definir sobre qué
+    registros concretos queremos pasar parámetros a la subrutina y sobre qué
+    registros haremos el retorno; podemos utilizar cualquier registro de
+    propósito general del procesador. Una vez definidos los registros que
+    utilizaremos para hacer el paso de parámetros, deberemos asignar a cada uno
+    el valor que queremos pasar a la subrutina antes de hacer call; para
+    devolver los valores, dentro de la subrutina, tendremos que asignar a los
+    registros correspondientes el valor que se debe devolver antes de hacer
+    ret. Recordemos que los registros que se utilicen para devolver un valor no
+    se han de almacenar en la pila al inicio de la subrutina, ya que no hay que
+    conservar el valor inicial. Supongamos que en el ejemplo del factorial
+    queremos pasar como parámetro un número cuyo factorial queremos calcular, y
+    devolver como resultado el factorial del número transferido como parámetro,
+    implementando el paso de parámetros y el retorno de resultados por medio de
+    registros. El número cuya factorial queremos calcular lo pasaremos por
+    medio del registro RBX y devolveremos el resultado al registro RAX. La
+    llamada de la subrutina será:
+</p>
+<p class="parrafo"><h3>
+    mov rbx, 5
+</p>
+<p class="parrafo"><h3>
+    call factorial
+</p>
+<p class="parrafo"><h3>
+    ;En rax tendremos el valor del factorial de 5 (=120)
+</p>
+<p class="parrafo"><h3>
+    Subrutina:
+</p>
+<p class="parrafo"><h3>
+    factorial:
+</p>
+<p class="parrafo"><h3>
+    push rbx ; Almacenar en la pila el registro que modificamos
+</p>
+<p class="parrafo"><h3>
+    ; y que no se utiliza para devolver el resultado.
+</p>
+<p class="parrafo"><h3>
+    ; Instrucciones de la subrutina
+</p>
+<p class="parrafo"><h3>
+    mov rax, 1 ; rax será el resultado
+</p>
+<p class="parrafo"><h3>
+    while:
+</p>
+<p class="parrafo"><h3>
+    imul rax, rbx
+</p>
+<p class="parrafo"><h3>
+    dec rbx cmp rbx, 1 ; Se hace la comparación
+</p>
+<p class="parrafo"><h3>
+    jg while ; Si se cumple la condición salta a while
+</p>
+<p class="parrafo"><h3>
+    ; En rax tendremos el valor del factorial de rbx
+</p>
+<p class="parrafo"><h3>
+    pop rbx ; Restauramos el valor inicial del registro
+</p>
+<p class="parrafo"><h3>
+    ret
+</p>
+<p class="parrafo"><h3>
+    Paso de parámetros y retorno de resultado por medio de la pila Si queremos
+    pasar parámetros y devolver resultados a una subrutina utilizando la pila,
+    y una vez definidos los parámetros que queremos pasar y los que queremos
+    retornar, hay que hacer lo siguiente: 1) Antes de hacer la llamada a la
+    subrutina: es necesario reservar espacio en la pila para los datos que
+    queremos devolver y a continuación introducir los parámetros necesarios en
+    la pila. 2)Dentro de la subrutina: hay que acceder a los parámetros
+    leyéndolos di[1]rectamente de memoria, utilizando un registro que apunté a
+    la cima de la pila. El registro apuntador de pila, RSP, siempre apunta a la
+    cima de la pila y, por lo tanto, podemos acceder al contenido de la pila
+    haciendo un direccionamiento a memoria que utilice RSP, pero si utilizamos
+    la pila dentro de la subrutina, no se recomienda utilizarlo. El registro
+    que se suele utilizar como apuntador para acceder a la pila es el registro
+    RBP. Antes de utilizarlo, lo tendremos que almacenar en la pila para poder
+    recuperar el valor inicial al final de la subrutina, a continuación, se
+    carga en RBP el valor de RSP. RBP no se debe cambiar dentro de la
+    subrutina; al final de esta se copia el valor sobre RSP para restaurar el
+    valor inicial. 3) Después de ejecutar a subrutina: una vez fuera de la
+    subrutina es necesario liberar el espacio utilizado por los parámetros de
+    entrada y después recuperar los resultados del espacio que hemos reservado
+    antes de hacer la llamada. CC-BY-SA • PID_00178132 75 Programación en
+    ensamblador (x86-64) Supongamos que en el ejemplo de la factorial queremos
+    pasar como parámetro el número cuyo factorial queremos calcular y devolver
+    como resultado el factorial del número pasado como parámetro, implementando
+    el paso de parámetros y el retorno de resultados por medio de la pila.
+</p>
+<p class="parrafo"><h3>
+    La llamada de la subrutina:
+</p>
+<p class="parrafo"><h3>
+    sub rsp,8 ; Reservamos 8 bytes para el resultado que devolvemos
+</p>
+<p class="parrafo"><h3>
+    mov rbx, 5
+</p>
+<p class="parrafo"><h3>
+    push rbx; Introducimos el parámetro de entrada en la pila
+</p>
+<p class="parrafo"><h3>
+    call factorial
+</p>
+<p class="parrafo"><h3>
+    add rsp,8 ; Liberamos el espacio utilizado por el parámetro de entrada
+</p>
+<p class="parrafo"><h3>
+    pop rax ; Recuperamos el resultado devuelto sobre el registro rax
+</p>
+<p class="parrafo"><h3>
+    Variables locales En los lenguajes de alto nivel es habitual definir
+    variables locales dentro de las funciones definidas en un programa. Las
+    variables locales ocupan un espacio definido dentro de la pila. Ahora
+    veremos cómo reservar espacio para variables locales en subrutinas
+    definidas en ensamblador. Para reservar el espacio necesario, hemos de
+    saber cuántos bytes utilizaremos como variables locales. A continuación, es
+    necesario decrementar el valor del apuntador a pila RSP tantas unidades
+    como bytes se quieran reservar para las variables locales; de esta manera,
+    si utilizamos las instrucciones que trabajan con la pila dentro de la
+    subrutina (push y pop) no sobrescribiremos el espacio de las variables
+    locales. La actualización de RSP se hace justo después de actualizar el
+    registro que utilizamos para acceder a la pila, RBP.
+</p>
+<p class="parrafo"><h3>
+    subrutina:
+</p>
+<p class="parrafo"><h3>
+    push rbp ; Almacenar el registro que utilizaremos
+</p>
+<p class="parrafo"><h3>
+    ; de apuntador a la pila rbp
+</p>
+<p class="parrafo"><h3>
+    mov rbp, rsp ; Asignar a RBP el valor del registro apuntador RSP
+</p>
+<p class="parrafo"><h3>
+    sub rsp, n ; n indica el número de bytes reservados para las
+</p>
+<p class="parrafo"><h3>
+    ; variables locales
+</p>
+<p class="parrafo"><h3>
+    ;
+</p>
+<p class="parrafo"><h3>
+    ; Instrucciones de la subrutina
+</p>
+<p class="parrafo"><h3>
+    ;
+</p>
+<p class="parrafo"><h3>
+    mov rsp, rbp ; Restauramos el valor inicial de RSP con
+</p>
+<p class="parrafo"><h3>
+    RBP
+</p>
+<p class="parrafo"><h3>
+    pop rbp ; Restauramos el valor inicial de RBP
+</p>
+<p class="parrafo"><h3>
+    ret
+</p>
+<p class="parrafo"><h3>
+    Como las variables locales están en la pila, se utiliza también el registro
+    apuntador RBP para acceder a las variables. Se utiliza un direccionamiento
+    indexado sobre el registro RBP para acceder al espacio reservado, restando
+    un valor al registro RSP.
+</p>
+<p class="parrafo"><h3>
+    Ejemplo
+</p>
+<p class="parrafo"><h3>
+    push rbp ;Almacenar el registro que utilizaremos
+</p>
+<p class="parrafo"><h3>
+    ;de apuntador a la pila rbp
+</p>
+<p class="parrafo"><h3>
+    mov rbp, rsp ;Asignar a RBP el valor del registro apuntador RSP
+</p>
+<p class="parrafo"><h3>
+    sub rsp, 8 ;reservamos 8 bytes para variables locales
+</p>
+<p class="parrafo"><h3>
+    mov al, byte[RBP-1] ;accedemos a 1 byte de almacenamiento local
+</p>
+<p class="parrafo"><h3>
+    mov ax, word[RBP-2] ;accedemos a 2 bytes de almacenamiento local
+</p>
+<p class="parrafo"><h3>
+    mov eax, dword[RBP-4] ;accedemos a 4 bytes de almacenamiento local
+</p>
+<p class="parrafo"><h3>
+    mov rax, qword[RBP-8] ;accedemos a 8 bytes de almacenamiento local
+</p>
+
+
+
+<!-- -->
+<p></p>
+<br>
+<br>
+<a name="System calls"></a>
+<br>
+<br>
+<h2>5.7. Funciones del sistema operativo (system calls)
+</h2>
+<p class="parrafo"><h3>El lenguaje de ensamblador proporciona dos mecanismos para poder hacer
+llamadas al sistema operativo:</h3></p>
+<p></P>
+<h2>1)int 80h:</h2>
+<p class="parrafo"><h3>este es el mecanismo tradicional</h3>
+<p class="parrafo"><h3>El servicio que se solicita se especifica mediante el registro RAX. Los parámetros
+necesarios para la ejecución del servicio vienen especificados por medio de los
+registros RBX, RCX, RDX, RSI, RDI y RBP.</h3></p>
+<p></P>
+<h2>2)syscall:</h2>
+<p class="parrafo"><h3>Es un mecanismo más eficiente de hacer r llamadas al sistema </h3></p>
+<p></P>
+<h2>5.7.1. Lectura de una cadena de caracteres desde el teclado
+</h2>
+<p class="parrafo"><h3>Lee caracteres del teclado hasta que se pulsa la tecla ENTER. La lectura de caracteres se hace llamando a la función de lectura read. Para utilizar esta función hay que especificar el descriptor de archivo que se utilizará; en el caso
+de una lectura de teclado se utiliza el descriptor correspondiente a la entrada
+estándar, un 0 en este caso.</h3></p>
+<p></P>
+<p class="parrafo"><h3>Según si se utiliza int 80h o syscall, los parámetros son los siguientes:</h3></p>
+<p></P>
+<h2>1)int 80h
+</h2>
+<p class="parrafo"><h3>a) Parámetros de entrada></h3></p>
+<p></P>
+<p class="parrafo"><h3>• RAX = 3
+</h3></p>
+<p class="parrafo"><h3>• RBX = 0, descriptor correspondiente a la entrada estándar (teclado)</h3></p>
+<p class="parrafo"><h3>• RCX = dirección de la variable de memoria donde se guardará la cadena
+leída</h3></p>
+<p class="parrafo"><h3>• RDX = número máximo de caracteres que se leerán
+</h3></p>
+<p></P>
+<p class="parrafo"><h3>b) Parámetros de salida	</h3></p>
+<p></P>
+<p class="parrafo"><h3>• RAX = número de caracteres leídos
+</h3></p>
+<p class="parrafo"><h3>• La variable indicada se llena con los caracteres leídos.
+</h3></p>
+<p></P>
+<h2>2)syscall
+
+</h2>
+<p class="parrafo"><h3>a) Parámetros de entrada</h3></p>
+<p></P>
+<p class="parrafo"><h3>• RAX = 0</h3></p>
+<p class="parrafo"><h3>• RDI = 0, descriptor correspondiente a la entrada estándar (teclado)
+</h3></p>
+<p class="parrafo"><h3>• RSI = dirección de la variable de memoria donde se guardará la cadena leída</h3></p>
+<p class="parrafo"><h3>• RDX = número máximo de caracteres que se leerán</h3></p>
+<p></P>
+<p class="parrafo"><h3>b) Parámetros de salida</h3></p>
+<p></P>
+<p class="parrafo"><h3>• RAX = número de caracteres leídos
+</h3></p>
+<div class="img1" >
+<img src="lectura.png" class="rounded mx-auto d-block"  >
+</div>
+<h2>5.7.2. Escritura de una cadena de caracteres por pantalla
+</h2>
+<p class="parrafo"><h3>La escritura de caracteres por pantalla se efectúa llamando a la función de
+escritura write. Para utilizar esta función hay que especificar el descriptor de
+archivo que se utilizará; en el caso de una escritura por pantalla se utiliza el
+descriptor correspondiente a la salida estándar, un 1 en este caso.
+</h3></p>
+<p></P>
+<h2>1)int 80h
+</h2>
+<p class="parrafo"><h3>a) Parámetros de entrada</h3></p>
+<p></P>
+<p class="parrafo"><h3>• RAX = 4</h3></p>
+<p class="parrafo"><h3>• RBX = 1, descriptor correspondiente a la salida estándar (pantalla)</h3></p>
+<p class="parrafo"><h3>• RCX = dirección de la variable de memoria que queremos escribir, la variable ha de estar definida con un byte 0 al final
+</h3></p>
+<p class="parrafo"><h3>• RDX = tamaño de la cadena que queremos escribir en bytes, incluido el
+0 del final</h3></p>
+<p class="parrafo"><h3>b) Parámetros de salida</h3></p>
+<p class="parrafo"><h3>• RAX = número de caracteres escritos
+</h3></p>
+<p></P>
+<h2>2)syscall
+</h2>
+<p class="parrafo"><h3>a) Parámetros de entrada</h3></p>
+<p></P>
+<p class="parrafo"><h3>• RAX = 1</h3></p>
+<p class="parrafo"><h3>• RDI = 1, descriptor correspondiente a la salida estándar (pantalla)
+</h3></p>
+<p class="parrafo"><h3>• RSI = dirección de la variable de memoria que queremos escribir, la variable
+ha de estar definida con un byte 0 al final</h3></p>
+<p class="parrafo"><h3>• RDX = tamaño de la cadena que queremos escribir en bytes, incluido el
+0 del final</h3></p>
+<p></P>
+
+<p class="parrafo"><h3>b) Parámetros de salida</h3></p>
+<p></P>
+
+<p class="parrafo"><h3>• RAX = número de caracteres escritos</h3></p>
+<p></P>
+<div class="img1" >
+<img src="escritura.png" class="rounded mx-auto d-block"  >
+</div>
+<p></p>
+
+<!-- -->
+<br>
+<br>
+<a name="Operadores"></a>
+<br>
+<br>
+<h2>6.1. ADC: suma aritmética con bit de transporte
+</h2>
+<p class="parrafo"><h3>ADC destino, fuente</h3></p>
+<p></P>
+<p class="parrafo"><h3>Efectúa una suma aritmética; suma el operando fuente y el valor del bit de
+transporte (CF) al operando de destino, almacena el resultado sobre el operando destino y sustituye el valor inicial del operando destino.
+</h3></p>
+<p></P>
+
+<p class="parrafo"><h3>Operación</h3></p>
+<p></P>
+<p class="parrafo"><h3>destino = destino + fuente + CF</h3></p>
+<p></P>
+
+<p class="parrafo"><h3>Bits de resultado modificados</h3></p>
+<p></P>
+<p class="parrafo"><h3>OF, SF, ZF, AF, PF, CF</h3></p>
+<p></P>
+<p class="parrafo"><h3>Si el resultado no cabe dentro del operando destino, el bit de transporte se
+pone a 1. El resto de bits de resultado se modifican según el resultado de la
+operación.</h3></p>
+<p></P>
+<p class="parrafo"><h3>Formatos válidos</h3></p>
+<p></P>
+<p class="parrafo"><h3>ADC reg, reg</h3></p>
+<p></P>
+<p class="parrafo"><h3>ADC reg, tamaño mem
+</h3></p>
+<p></P>
+<p class="parrafo"><h3>ADC tamaño mem, reg</h3></p>
+<p></P>
+<p class="parrafo"><h3>Los dos operandos han de ser del mismo tamaño.</h3></p>
+<p></P>
+<p class="parrafo"><h3>ADC reg, imm</h3></p>
+<p></P>
+<p class="parrafo"><h3>ADC tamaño mem, imm</h3></p>
+<p></P>
+<p class="parrafo"><h3>El tamaño del inmediato puede ir desde 8 bits hasta el tamaño del primer
+operando, 32 bits como máximo.</h3></p>
+<p></P>
+<div class="img1" >
+<img src="ADC.png" class="rounded mx-auto d-block"  >
+</div>
+<p></p>
+<!-- -->
+
+<h2>6.2. ADD: suma aritmética<h2>
+<p class="parrafo"><h3>Efectúa la suma aritmética de los dos operandos de la instrucción, almacena
+el resultado sobre el operando destino y sustituye el valor inicial del operando
+destino</h3></p>
+<p class="parrafo"><h3>Si el resultado no cabe dentro del operando destino, el bit de transporte se
+pone a 1. El resto de bits de resultado se modifican según el resultado de la
+operación.</h3></p>
+<p class="parrafo"><h3>EJEMPLO:</h3></p>
+<p class="parrafo"><h5>ADD R9,RAX</h5></p>
+
+<h2>6.3. AND: Y lógica</h2>
+<p class="parrafo"><h3>Realiza una operación lógica AND ('y lógica') bit a bit entre el operando destino
+y el operando fuente, el resultado de la operación se guarda sobre el operando
+destino sobreescribiendo el valor inicial. El valor del operando fuente no se
+modifica.</h3></p>
+<p class="parrafo"><h3>EJEMPLO:</h3></p>
+<p class="parrafo"><h5>AND R9,RAX</h5></p>
+
+<h2>6.4. CALL: llamada a subrutina</h2>
+<p class="parrafo"><h3>Llama a la subrutina que se encuentra en la dirección de memoria indicada por
+la etiqueta. Guarda en la pila la dirección de memoria de la instrucción que
+sigue en secuencia la instrucción CALL y permite el retorno desde la subrutina
+con la instrucción RET; a continuación carga en el RIP (instruction pointer) la
+dirección de memoria donde está la etiqueta especificada en la instrucción y
+transfiere el control a la subrutina</h3></p>
+<p class="parrafo"><h3>EJEMPLO:</h3></p>
+<p class="parrafo"><h5>CALL subrutina1</h5></p>
+
+<!-- -->
+
+<!-- CMP-->
+
+<h2>6.5. CMP: comparación aritmética
+</h2>
+<p class="parrafo"><h3>CMP destino, fuente</h3></p>
+<p></P>
+<p class="parrafo"><h3>Compara los dos operandos de la instrucción sin afectar al valor de ninguno
+de los operandos, actualiza los bits de resultado según el resultado de la comparación. La comparación se realiza con una resta entre los dos operandos, sin
+considerar el transporte y sin guardar el resultado.</h3></p>
+<p></P>
+<p class="parrafo"><h3>Bits de resultado modificados</h3></p>
+<p></P>
+<p class="parrafo"><h3>OF, SF, ZF, AF, PF, CF</h3></p>
+<p></P>
+<p class="parrafo"><h3>Los bits de resultado se modifican según el resultado de la operación de resta.</h3></p>
+<p></P>
+<p class="parrafo"><h3>Formatos válidos</h3></p>
+<p></P>
+<p class="parrafo"><h3>CMP reg,reg</h3></p>
+<p class="parrafo"><h3>CMP reg,tamaño mem</h3></p>
+<p class="parrafo"><h3>CMP tamaño mem,reg</h3></p>
+<p></P>
+<p class="parrafo"><h3>Los dos operandos han de ser del mismo tamaño.</h3></p>
+<p></P>
+<p class="parrafo"><h3>CMP reg,imm</h3></p>
+<p class="parrafo"><h3>CMP tamaño mem,imm</h3></p>
+<p></P>
+<p class="parrafo"><h3>El tamaño del inmediato puede ir desde 8 bits hasta el tamaño del primer
+operando, como máximo 32 bits.
+</h3></p>
+<p></P>
+<div class="img1" >
+<img src="CMP.png" class="rounded mx-auto d-block"  >
+</div>
+<p></p>
+<h2>6.6. DEC: decrementa el operando
+</h2>
+<p class="parrafo"><h3>DEC destino</h3></p>
+<p></P>
+<p class="parrafo"><h3>Resta 1 al operando de la instrucción y almacena el resultado en el mismo
+operando</h3></p>
+<p></P>
+<p class="parrafo"><h3>Operación</h3></p>
+<p></P>
+<p class="parrafo"><h3>destino = destino – 1</h3></p>
+<p></P>
+<p class="parrafo"><h3>Bits de resultado modificados</h3></p>
+<p></P>
+<p class="parrafo"><h3>OF, SF, ZF, AF, PF</h3></p>
+<p></P>
+<h2>
+</h2>
+<p class="parrafo"><h3>Los bits de resultado se modifican según el resultado de la operación</h3></p>
+<p></P>
+<h2>
+</h2>
+<p class="parrafo"><h3>Formatos válidos</h3></p>
+<p></P>
+<h2>
+</h2>
+<p class="parrafo"><h3>DEC reg</h3></p>
+<p class="parrafo"><h3>DEC tamaño mem</h3></p>
+<p></P>
+<div class="img1" >
+<img src="DEC.png" class="rounded mx-auto d-block"  >
+</div>
+<p></p>
+<h2>6.7. DIV: división entera sin signo
+</h2>
+<p class="parrafo"><h3>DIV fuente</h3></p>
+<p></P>
+<p class="parrafo"><h3>Divide el dividendo implícito entre el divisor explícito sin considerar los signos
+de los operandos.
+</h3></p>
+<p></P>
+<p class="parrafo"><h3>Si el divisor es de 8 bits, se considera como dividendo implícito AX. El cociente
+de la división queda en AL y el resto, en AH.</h3></p>
+<p></P>
+<p class="parrafo"><h3>Operación</h3></p>
+<p></P>
+<p class="parrafo"><h3>Si fuente es de 8 bits: AL = AX / fuente, AH = AX mod fuente</h3></p>
+<p class="parrafo"><h3>Si fuente es de 16 bits: AX = DX:AX / fuente, DX = DX:AX mod fuente
+</h3></p>
+<p class="parrafo"><h3>Si fuente es de 32 bits: EAX = EDX:EAX / fuente, EDX = EDX:EAX mod
+fuente</h3></p>
+<p class="parrafo"><h3>Si fuente es de 64 bits: RAX = RDX:RAX / fuente, RDX = RDX:RAX mod
+fuente</h3></p>
+<p></P>
+<p class="parrafo"><h3>Bits de resultado modificados
+</h3></p>
+<p></P>
+<p class="parrafo"><h3>OF, SF, ZF, AF, PF, CF</h3></p>
+<p></P>
+<p class="parrafo"><h3>La instrucción DIV no deja información a los bits de resultado, pero estos
+quedan indefinidos.</h3></p>
+<p></P>
+<p class="parrafo"><h3>Formatos válidos</h3></p>
+<p></P>
+<p class="parrafo"><h3>DIV reg
+</h3></p>
+<p class="parrafo"><h3>DIV tamaño mem</h3></p>
+<p></P>
+<div class="img1" >
+<img src="DIV.png" class="rounded mx-auto d-block"  >
+</div>
+<p></p>
+<h2>
+</h2>
+<p class="parrafo"><h3></h3></p>
+<p></P>
+<h2>
+</h2>
+<p class="parrafo"><h3></h3></p>
+<p></P>
+<!-- -->
+<h2> IDIV: división entera con signo </h2>
+<p>
+    <strong> IDIV: división entera con signo </strong>
+</p>
+<p>
+    IDIV fuente
+</p>
+<p>
+    Divide el dividendo implícito entre el divisor explícito (fuente)
+    considerando el signo de los operandos. El funcionamiento es idéntico al de
+    la división sin signo.
+</p>
+<p>
+    Si el divisor es de 8 bits, se considera como dividendo implícito AX.
+</p>
+<p>
+    El cociente de la división queda en AL y el resto, en AH.
+</p>
+<p>
+    Si el divisor es de 32 bits, el funcionamiento es similar al caso anterior,
+    pero se utiliza el par de registros EDX:EAX; la parte menos significativa
+    del dividendo se coloca en EAX, y la parte más significativa, en EDX. El
+    cociente de la división queda en EAX y el resto, en EDX.
+</p>
+<p>
+    Si el divisor es de 64 bits, el funcionamiento es parecido a los dos casos
+    anteriores, pero se utiliza el par de registros RDX:RAX; la parte menos
+    significativa del dividendo se coloca en RAX y la parte más significativa,
+    en RDX. El cociente de la división queda en RAX y el resto, en RDX.
+</p>
+<p>
+    Operación
+</p>
+<p>
+    Si fuente es de 8 bits: AL = AX / fuente, AH = AX mod fuente
+</p>
+<p>
+    Si fuente es de 16 bits: AX = DX:AX / fuente, DX = DX:AX mod fuente
+</p>
+<p>
+    Si fuente es de 32 bits: EAX = EDX:EAX / fuente, EDX = EDX:EAX mod fuente
+</p>
+<p>
+    Si fuente es de 64 bits: RAX = RDX:RAX / fuente, RDX = RDX:EAX mod fuente
+</p>
+<p>
+    <strong>Bits de resultado modificados</strong>
+</p>
+<p>
+    <strong> </strong>
+    OF, SF, ZF, AF, PF, CF
+</p>
+<p>
+    La instrucción IDIV no deja información a los bits de resultado, pero estos
+    quedan indefinidos.
+</p>
+<p>
+    <strong>Formatos válidos</strong>
+</p>
+<p>
+    IDIV reg
+</p>
+<p>
+    IDIV tamaño mem
+</p>
+<p>
+    <strong>Ejemplos</strong>
+</p>
+<p>
+    IDIV CH ; AX / CH =&gt; Cociente en AL; resto en AH
+</p>
+<p>
+    IDIV BX ; DX:AX / BX =&gt; Cociente en AX; resto en DX<strong></strong>
+</p>
+<p>
+    IDIV ECX ; EDX:EAX / ECX =&gt; Cociente en EAX; resto en EDX
+</p>
+<p>
+    IDIV QWORD [R9] ; RDX:RAX / [R9] =&gt; Cociente en RAX, resto en RDX
+</p>
+
+
+<!-- -->
+<h2> IMUL: multiplicación entera con signo   </h2>
+<p>
+    IMUL fuente
+</p>
+<p>
+    IMUL destino, fuente
+</p>
+<p>
+    La operación de multiplicación con signo puede utilizar diferente número de
+    operandos; se describirá el formato de la instrucción con un operando y con
+    dos operandos.
+</p>
+
+<!-- -->
+<h2>IMUL fuente: un operando explícito   </h2>
+<p>
+    <strong> IMUL fuente: un operando explícito </strong>
+</p>
+<p>
+    Multiplica el operando fuente por AL, AX, EAX, o RAX considerando el signo
+    de los operandos y almacena el resultado en AX, DX:AX, EDX:EAX o RDX:RAX.
+</p>
+<p>
+    <strong>Operación </strong>
+</p>
+<p>
+    Si fuente es de 8 bits AX = AL * fuente
+</p>
+<p>
+    Si fuente es de 16 bits DX:AX = AX * fuente
+</p>
+<p>
+    Si fuente es de 32 bits EDX:EAX = EAX * fuente
+</p>
+<p>
+    Si fuente es de 64 bits RDX:RAX = RAX * fuente<strong></strong>
+</p>
+<p>
+    <strong>Bits de resultado modificados</strong>
+</p>
+<p>
+    OF, SF, ZF, AF, PF, CF
+</p>
+<p>
+    Los bits de resultado SF, ZF, AF, y PF quedan indefinidos después de que se
+    ejecute la instrucción IMUL.
+</p>
+<p>
+    CF y OF se fijan en 0 si la parte alta del resultado es 0 (AH, DX, EDX o
+    RDX), en caso contrario se fijan en 1.
+</p>
+<p>
+    <strong>Formatos válidos</strong>
+</p>
+<p>
+    IMUL reg
+</p>
+<p>
+    IMUL tamaño mem
+</p>
+<p>
+    <strong>Ejemplos</strong>
+</p>
+<p>
+    IMUL ECX ; EAX * ECX =&gt; EDX:EAX
+</p>
+<p>
+    IMUL QWORD [RBX] ; AX * [RBX] =&gt; RDX:RAX<strong></strong>
+</p>
+<!-- -->
+
+<h2>6.9.2. IMUL destino, fuente: dos operandos explícitos</h2>
+<p class="parrafo"><h3>Multiplica el operando fuente por el operando destino considerando el signo
+de los dos operandos y almacena el resultado en el operando destino; sobreescribe el valor que tuviera</h3></p>
+<p class="parrafo"><h3>EJEMPLO:</h3></p>
+<p class="parrafo"><h5>IMUL EAX, 4</h5></p>
+
+<!-- -->
+<h2>6.10. IN: lectura de un puerto de entrada/salida</h2>
+<p class="parrafo"><h3>Lee el valor de un puerto de E/S especificado por el operando fuente y lleva
+el valor al operando destino.
+<br>
+El operando fuente puede ser un valor inmediato de 8 bits, que permite acceder
+a los puertos 0-255, o el registro DX, que permite acceder a cualquier puerto
+de E/S de 0-65535.</h3></p>
+<p class="parrafo"><h3>El operando destino solo puede ser uno de los registros siguientes:
+<br>
+• AL se lee un byte del puerto
+<br>
+• AX se leen dos bytes
+<br>
+• EAX se leen cuatro bytes
+</h3></p>
+<p class="parrafo"><h3>EJEMPLO:</h3></p>
+<p class="parrafo"><h5>IN AL, 60 h</h5></p>
+
+
+<h2>6.11. INC: incrementa el operando</h2>
+<p class="parrafo"><h3>Suma 1 al operando de la instrucción y almacena el resultado en el mismo
+operando.</h3></p>
+<p class="parrafo"><h3>EJEMPLO:</h3></p>
+<p class="parrafo"><h5>INC R9</h5></p>
+ <!-- -->
+ 
+ <h2> INT: llamada a una interrupción software</h2>
+
+<p>INT servicio</p>
+<p>Llamada a un servicio del sistema operativo, a una de las 256 interrupciones
+software definidas en la tabla de vectores de interrupción. El número de servicio
+ha de ser un valor entre 0 y 255. Es habitual expresar el número del servicio
+como un valor hexadecimal, de 00h a FFh.</p>
+<p>Cuando se llama a una interrupción, el registro EFLAGS y la dirección de retorno son almacenados en la pila.</p>
+<p>Operación</p>
+<p>RSP=RSP-8</p>
+<p>M(RSP) ← EFLAGS</p>
+<p>RSP=RSP-80</p>
+<p>M(RSP) ← RIP</p>
+<p>RIP← dirección rutina de servicio</p>
+<p>Bits de resultado modificados</p>
+<p>IF, TF</p>
+<p>Estos dos bits de resultado se ponen a 0; poner a 0 el bit de resultado IF impide que se trate otra interrupción mientras se está ejecutando la rutina de
+interrupción actual.</p>
+<p>Formatos válidos</p>
+<p>INT servicio</p>
+<p>Ejemplos</p>
+<p>INT 80h</p>
+
+<h2> IRET: retorno de interrupción</h2>
+<p>IRET</p>
+<p>IRET se debe utilizar para salir de las rutinas de servicio a interrupciones (RSI).</p>
+<p>La instrucción extrae de la pila la dirección de retorno sobre el registro RIP,
+a continuación saca la palabra siguiente de la pila y la coloca en el registro</p>
+<p>EFLAGS.</p>
+<p>Operación</p>
+<p>RIP ← dirección retorno</p>
+<p>RSP=RSP+8</p>
+<p>EFLAGS ← M(RSP)</p>
+<p>RSP=RSP+8</p>
+<p>Bits de resultado modificados</p>
+<p>Todos: OF, DF, IF, TF, SF, ZF, AF, PF, CF</p>
+<p>Modifica todos los bits de resultado, ya que saca de la pila una palabra que es
+llevada al registro EFLAGS.</p>
+<p>Formatos válidos</p>
+<p>IRET</p>
+<p>Ejemplo</p>
+<p>IRET</p>
+
+<h2> Jxx: salto condicional</h2>
+<p>Jxx etiqueta</p>
+<p>Realiza un salto según una condición determinada; la condición se comprueba
+consultando el valor de los bits de resultado.</p>
+<p>La etiqueta codifica un desplazamiento de 32 bits con signo y permite dar un
+salto de –231 bytes a +231 – 1 bytes.</p>
+<p>Si la condición se cumple, se salta a la posición del código indicada por la
+etiqueta; se carga en el registro RIP el valor RIP + desplazamiento</p>
+<p>Operación</p>
+<p>RIP = RIP + desplazamiento</p>
+<p>Bits de resultado modificados</p>
+<p>Ninguno</p>
+<p>Formatos válidos</p>
+<p>Según la condición de salto, tenemos las instrucciones siguientes:</p>
+<p>1) Instrucciones que no tienen en cuenta el signo</p>
+<p>Instrucción Descripción Condición</p>
+<p>---------- ------------------------------------------ --------------</p>
+<p>JA/JNBE (Jump If Above/Jump If Not Below or Equal) CF=0 y ZF=0</p>
+<p>JAE/JNB (Jump If Above or Equal/Jump If Not Below) CF=0</p>
+<p>JB/JNAE (Jump If Below/Jump If Not Above or Equal) CF=1</p>
+<p>JBE/JNA (Jump If Below or Equal/Jump If Not Above) CF=1 o ZF=1</p>
+<br>
+</br>
+<p>2) Instrucciones que tienen en cuenta el signo</p>
+<p>Instrucción Descripción Condición</p>
+<p>---------- ------------------------------------------ --------------</p>
+<p>JE/JZ (Jump If Equal/Jump If Zero) ZF=1</p>
+<p>JNE/JNZ (Jump If Not Equal/Jump If Not Zero) ZF=0</p>
+<p>JG/JNLE (Jump If Greater/Jump If Not Less or Equal) ZF=0 y SF=OF</p>
+<p>CC-BY-SA • PID_00178132 106 Programación en ensamblador (x86-64)</p>
+<p>JGE/JNL (Jump If Greater or Equal/Jump If Not Less) SF=OF</p>
+<p>JL/JNGE (Jump If Less/Jump If Not Greater or Equal) S≠FOF</p>
+<p>JLE/JNG (Jump If Less or Equal/Jump If Not Greater) ZF=1 o S≠FOF</p>
+<br>
+</br>
+<p>3) Instrucciones que comprueban el valor de un bit de resultado</p>
+<p>Instrucción Descripción Condición</p>
+<p>---------- ------------------------------------------ --------------</p>
+<p>JC (Jump If Carry flag set) CF=1</p>
+<p>JNC (Jump If Carry flag Not set) CF=0</p>
+<p>JO (Jump If Overflow flag set) OF=1</p>
+<p>JNO (Jump If Overflow flag Not set) OF=0</p>
+<p>JS (Jump If Sign flag set) SF=1</p>
+<p>JNS (Jump If Sign flag Not set) SF=0</p>
+<br>
+</br>
+<p>Ejemplos</p>
+<p>JE etiqueta1 ;salta si Z=1</p>
+<p>JG etiqueta2 ;salta si Z=0 y SF=OF</p>
+<p>JL etiqueta3 ;salta si S≠FOF</p>
+
+ 
+ <!-- -->
+<h2> JMP: salto incondicional</h2>
+<p>JMP etiqueta</p>
+<p>Salta de manera incondicional a la dirección de memoria correspondiente a
+la posición de la etiqueta especificada; el registro RIP toma como valor la di rección de la etiqueta.</p>
+<p>Operación</p>
+<p>RIP=dirección_etiqueta</p>
+<p>Bits de resultado modificados</p>
+<p>Ninguno</p>
+<p>Formatos válidos</p>
+<p>JMP etiqueta</p>
+<p>Ejemplo</p>
+<p>JMP bucle</p>
+
+<h2> LOOP: bucle hasta RCX=0</h2>
+<p>LOOP etiqueta</p>
+<p>La instrucción utiliza el registro RCX.</p>
+<p>Decrementa el valor de RCX, comprueba si el valor es diferente de cero y en
+este caso realiza un salto a la etiqueta indicada.</p>
+<p>La etiqueta codifica un desplazamiento de 32 bits con signo y permite efectuar
+un salto de –231 bytes a +231 – 1 bytes.</p>
+<p>Operación</p>
+<p>La instrucción es equivalente al conjunto de instrucciones siguientes:</p>
+<p>DEC RCX</p>
+<p>JNE etiqueta</p>
+<p>Bits de resultado modificados</p>
+<p>Ninguno</p>
+<p>Formatos válidos</p>
+<p>LOOP etiqueta</p>
+<p>Ejemplo</p>
+<p>MOV RCX, 10</p>
+<p>bucle:</p>
+<p>Las instrucciones se repetirán 10 veces</p>
+<p>LOOP bucle</p>
+
+<h2> MOV: transferir un dato</h2>
+<p>MOV destino, fuente</p>
+<p>Copia el valor del operando fuente sobre el operando destino sobreescribiendo
+el valor original del operando destino.</p>
+<p>Operación</p>
+<p>destino = fuente</p>
+<p>Bits de resultado modificados</p>
+<p>Ninguno</p>
+<p>Formatos válidos</p>
+<p>MOV reg, reg</p>
+<p>MOV reg, tamaño mem</p>
+<p>MOV tamaño mem, reg</p>
+<p>Los dos operandos deben ser del mismo tamaño.</p>
+<p>MOV reg, imm</p>
+<p>El tamaño del inmediato puede ir desde 8 bits hasta el tamaño del registro; se
+permiten inmediatos de 64 bits si el registro es de 64 bits.</p>
+<p>MOV tamaño mem, imm</p>
+<p>El tamaño del inmediato puede ir desde 8 bits hasta el tamaño del primer
+operando, como máximo 32 bits.</p>
+<p>Ejemplos</p>
+<p>MOV RAX,R9</p>
+<p>MOV RAX,QWORD [variable]</p>
+<p>MOV QWORD [variable], RAX</p>
+<p>MOV RAX,0102030405060708h</p>
+<p>MOV WORD [RAX],0B80h</p>
+ <!-- -->
+ <h2>MUL: multiplicación entera sin signo </h2>
+<p>
+    <strong> MUL: multiplicación entera sin signo </strong>
+</p>
+<p>
+    MUL fuente
+</p>
+<p>
+    MUL multiplica el operando explícito por AL, AX, EAX o RAX sin considerar
+    el signo de los operandos y almacena el resultado en AX, DX:AX, EDX:EAX o
+    RDX:RAX.
+</p>
+<p>
+    <strong>Operación</strong>
+</p>
+<p>
+    Si fuente es de 8 bits AX = AL * fuente
+</p>
+<p>
+    Si fuente es de 16 bits DX:AX = AX * fuente
+</p>
+<p>
+    Si fuente es de 32 bits EDX:EAX = EAX * fuente
+</p>
+<p>
+    Si fuente es de 64 bits RDX:RAX = RAX * fuente
+</p>
+<p>
+    <strong>Bits de resultado modificados</strong>
+</p>
+<p>
+    OF, SF, ZF, AF, PF, CF
+</p>
+<p>
+    Los bits de resultado SF, ZF, AF, y PF quedan indeterminados después de que
+    se ejecute la instrucción MUL.<strong></strong>
+</p>
+<p>
+    CF y OF se fijan a 0 si la parte alta del resultado es 0 (AH, DX, EDX, o
+    RDX); en caso contrario se fijan a 1.
+</p>
+<p>
+    <strong>Formatos válidos</strong>
+</p>
+<p>
+    MUL reg
+</p>
+<p>
+    MUL tamaño mem
+</p>
+<p>
+    <strong>Ejemplos</strong>
+</p>
+<p>
+    MUL CH ; AL * CH --&gt; AX
+</p>
+<p>
+    MUL BX ; AX * BX --&gt; DX:AX
+</p>
+<p>
+    MUL RCX ; RAX * RCX --&gt; RDX:RAX
+</p>
+<p>
+    MUL WORD [BX+DI] ; AX * [BX+DI]--&gt; DX:AX<strong></strong>
+</p>
+
+ <!-- -->
+ 
+ 
+ <h2> NEG: negación aritmética en complemento a 2 </h2>
+<p>
+    <strong> </strong>
+    NEG destino
+</p>
+<p>
+    Lleva a cabo una negación aritmética del operando, es decir, hace el
+    complemento a 2 del operando especificado; es equivalente a multiplicar el
+    valor del operando por –1.<strong></strong>
+</p>
+<p>
+    Esta operación no es equivalente a complementar todos los bits del operando
+    (instrucción NOT).<strong></strong>
+</p>
+<p>
+    <strong>Operación</strong>
+</p>
+<p>
+    destino = (–1) * destino
+</p>
+<p>
+    <strong>Bits de resultado modificados</strong>
+</p>
+<p>
+    OF, SF, ZF, AF, PF, CF
+</p>
+<p>
+    Si el operando es 0, el resultado no varía y ZF=1 y CF=0; en caso
+    contrario, ZF=0 y CF=1.
+</p>
+<p>
+    Si el operando contiene el máximo valor negativo (por ejemplo 80000000h si
+    el operando es de 32 bits), el valor del operando no se modifica: OF=1 y
+    CF=1.
+</p>
+<p>
+    SF=1 si el resultado es negativo; SF=0 en caso contrario.
+</p>
+<p>
+    PF=1 si el número de unos del byte de menos peso del resultado es par; PF=0
+    en caso contrario.
+</p>
+<p>
+    <strong>Formatos válidos</strong>
+    <strong></strong>
+</p>
+<p>
+    NEG reg
+</p>
+<p>
+    NEG tamaño mem
+</p>
+<p>
+    <strong>Ejemplos</strong>
+</p>
+<p>
+    NEG RCX
+</p>
+<p>
+    NEG DWORD [variable]
+</p>
+ <!-- -->
+ 
+ <h2> NOT: negación lógica (negación en complemento a 1)</h2>
+<p>
+    NOT destino
+</p>
+<p>
+    Lleva a cabo una negación lógica del operando, es decir, hace el
+    complemento a 1 del operando especificado, y complementa todos los bits del
+    operando.
+</p>
+<p>
+    <strong>Operación</strong>
+</p>
+<p>
+    destino = –destino
+</p>
+<p>
+    Bits de resultado modificados
+</p>
+<p>
+    Ninguno
+</p>
+<p>
+    <strong>Formatos válidos</strong>
+</p>
+<p>
+    NOT reg
+</p>
+<p>
+    NOT tamaño mem
+</p>
+<p>
+    <strong>Ejemplos</strong>
+</p>
+<p>
+    NOT RAX
+</p>
+<p>
+    NOT QWORD [variable]<strong></strong>
+</p>
+ 
+ <!-- -->
+ 
+<h2> OUT: escritura en un puerto de entrada/salida </h2>
+<p>OUT destino, fuente</p>
+<p>Escribe el valor del operando fuente en un puerto de E/S especificado por el
+operando destino.</p>
+<p>El operando destino puede ser un valor inmediato de 8 bits, que permite acceder a los puertos 0-255, o el registro DX, que permite acceder a cualquier
+puerto de E/S de 0-65535.</p>
+<p>El operando fuente solo puede ser uno de los registros siguientes:</p>
+<p>• AL se escribe un byte</p>
+<p>• AX se escriben dos bytes</p>
+<p>• EAX se escriben cuatro bytes</p>
+<p>Operación</p>
+<p>destino(puerto E/S) = fuente</p>
+<p>Bits de resultado modificados</p>
+<p>Ninguno</p>
+<p>Formatos válidos</p>
+<p>OUT imm8, AL</p>
+<p>OUT imm8, AX</p>
+<p>OUT imm8, EAX</p>
+<p>OUT DX, AL</p>
+<p>OUT DX, AX</p>
+<p>OUT DX, EAX</p>
+<p>Ejemplos</p>
+<p>OUT 60h, AL</p>
+<p>OUT DX, AL</p>
+
+
+<h2> OR: o lógica</h2>
+<p>OR destino, fuente</p>
+<p>Realiza una operación lógica OR (o lógica) bit a bit entre el operando destino
+y el operando fuente; el resultado de la operación se guarda sobre el operando
+destino, sobreescribiendo el valor inicial. El valor del operando fuente no se
+modifica.</p>
+<p>Se lleva a cabo una operación OR entre el bit n del operando destino y el bit n
+del operando fuente según la tabla de verdad de la función OR:</p>
+<p>x y x OR y</p>
+<p>--- --- ------</p>
+<p>0 0 0</p>
+<p>0 1 1</p>
+<p>1 0 1</p>
+<p>1 1 1</p>
+<p>destino = destino OR fuente</p>
+<p>Bits de resultado modificados</p>
+<p>OF=0, SF, ZF, PF, CF=0</p>
+<p>Los bits de resultado OF y CF se ponen a 0, el resto de los bits de resultado se
+modifican según el resultado de la operación.</p>
+<p>Formatos válidos</p>
+<p>OR reg, reg</p>
+<p>OR reg, tamaño mem</p>
+<p>OR tamaño mem, reg</p>
+<p>Los dos operandos han de ser del mismo tamaño.</p>
+<p>OR reg, imm</p>
+<p>OR tamaño mem, imm</p>
+<p>El tamaño del inmediato puede ir desde 8 bits hasta el tamaño del primer
+operando, como máximo 32 bits.</p>
+<p>Ejemplos</p>
+<p>OR R9, RAX</p>
+<p>OR RAX, QWORD [variable]</p>
+<p>OR DWORD [variable], EAX</p>
+<p>OR RAX, 0x01020304</p>
+<p>OR BYTE [vector+RAX], 5</p>
+
+
+<h2> POP: extraer el valor de la cima de la pila</h2>
+<p>POP destino</p>
+<p>Extrae el valor que se encuentra en la cima de la pila (copia el valor de la
+memoria apuntado por el registro RSP) y lo almacena en el operando destino
+especificado; se extraen tantos bytes de la pila como el tamaño del operando
+indicado.</p>
+<p>A continuación se actualiza el valor del registro apuntador de pila, RSP, incrementándolo en tantas unidades como el número de bytes extraídos de la pila.
+El operando puede ser un registro de 16 o 64 bits o una posición de memoria
+de 16 o 64 bits.</p>
+<p>Operación</p>
+<p>destino = M[RSP]</p>
+<p>La instrucción es equivalente a:</p>
+<p>MOV destino, [RSP]</p>
+<p>ADD RSP, <tamaño del operando></p>
+<p>Por ejemplo:</p>
+<p>POP RAX</p>
+<p>es equivalente a:</p>
+<p>MOV RAX, [RSP]</p>
+<p>ADD RSP, 8</p>
+<p>Bits de resultado modificados</p>
+<p>Ninguno</p>
+<p>Formatos válidos</p>
+<p>POP reg</p>
+<p>POP tamaño mem</p>
+<p>El tamaño del operando ha de ser de 16 o 64 bits.</p>
+<p>Ejemplos</p>
+<p>POP AX</p>
+<p>POP RAX</p>
+<p>POP WORD [variable]</p>
+<p>POP QWORD [RBX]</p>
+
+ 
+ <!-- -->
+ 
+
+<h2>6.24. PUSH: introducir un valor en la pila</h2>
+<p class="parrafo"><h3>Se actualiza el valor del registro apuntador de pila, RSP, decrementándolo en
+tantas unidades como el tamaño en bytes del operando fuente.
+<br>
+A continuación, se introduce el valor del operando fuente en la cima de la pila,
+se copia el valor del operando a la posición de la memoria apuntada por el
+registro RSP y se colocan tantos bytes en la pila como el tamaño del operando
+indicado.
+<br>
+El operando puede ser un registro de 16 o 64 bits, una posición de memoria
+de 16 o 64 bits o un valor inmediato de 8, 16 o 32 bits extendido a 64 bits.</h3></p>
+<p class="parrafo"><h3>EJEMPLO:</h3></p>
+<p class="parrafo"><h5>PUSH RAX</h5></p>
+
+<h2>6.25. RET: retorno de subrutina</h2>
+<p class="parrafo"><h3>Sale de la subrutina que se estaba ejecutando y retorna al punto donde se había
+hecho la llamada, a la instrucción siguiente de la instrucción CALL.
+<br>
+Extrae de la pila la dirección de memoria de retorno (la dirección de la instrucción que sigue en secuencia a la instrucción CALL) y la carga en el RIP
+(instruction pointer).
+<br>
+Actualiza el puntero de pila (registro RSP), para que apunte al siguiente elemento de la pila; como la dirección de retorno es de 8 bytes (en modo de 64
+bits), incrementa RSP en 8 unidades.
+</h3></p>
+<p class="parrafo"><h3>EJEMPLO:</h3></p>
+<p class="parrafo"><h5>RET</h5></p>
+
+
+<h2>6.26. ROL: rotación a la izquierda</h2>
+<p class="parrafo"><h3>Lleva a cabo una rotación de los bits del operando destino a la izquierda, es
+decir, hacia al bit más significativo; rota tantos bits como indica el operando
+fuente.
+<br>
+Los bits pasan de la posición que ocupan a la posición de su izquierda; el
+bit de la posición más significativa pasa a la posición menos significativa del
+operando.
+<br>
+El operando fuente solo puede ser un valor inmediato de 8 bits o el registro CL.
+<br>
+Si el operando destino es de 64 bits, se enmascarán los dos bits de más peso
+del operando fuente, lo que permite rotaciones de 0 a 63 bits.
+<br>
+Si el operando destino es de 32 bits o menos, se enmascarán los tres bits de
+más peso del operando fuente, lo que permite rotaciones de 0 a 31 bits</h3></p>
+<p class="parrafo"><h3>EJEMPLO:</h3></p>
+<p class="parrafo"><h5>ROL RAX,CL</h5></p>
+
+<h2>6.27. ROR: rotación a la derecha</h2>
+<p class="parrafo"><h3>Realiza una rotación de los bits del operando destino a la derecha, es decir, hacia al bit menos significativo; rota tantos bits como indica el operando fuente.
+<br>
+Los bits pasan desde la posición que ocupan a la posición de su derecha; el
+bit de la posición menos significativa pasa a la posición más significativa del
+operando.
+<br>
+El operando fuente solo puede ser un valor inmediato de 8 bits o el registro CL.
+Si el operando destino es de 64 bits, se enmascaran los dos bits de más peso
+del operando fuente, lo que permite rotaciones de 0 a 63 bits.
+<br>
+Si el operando destino es de 32 bits o menos, se enmascaran los tres bits de
+más peso del operando fuente, lo que permite rotaciones de 0 a 31 bits.
+</h3></p>
+<p class="parrafo"><h3>EJEMPLO:</h3></p>
+<p class="parrafo"><h5>ROR RAX,1</h5></p>
+
+
+<h2>6.28. SAL: desplazamiento aritmético (o lógico) a la izquierda</h2>
+<p class="parrafo"><h3>Lleva a cabo un desplazamiento a la izquierda de los bits del operando destino;
+desplaza tantos bits como indica el operando fuente.
+<br>
+Los bits pasan de la posición que ocupan a la posición de su izquierda y se
+van añadiendo ceros por la derecha; el bit más significativo se traslada al bit
+de transporte (CF).
+<br>
+El operando fuente solo puede ser un valor inmediato de 8 bits o el registro CL.
+Si el operando destino es de 64 bits, se enmascaran los dos bits de más peso
+del operando fuente, lo que permite desplazamientos de 0 a 63 bits.
+<br>
+Si el operando destino es de 32 bits o menos, se enmascaran los tres bits de
+más peso del operando fuente, lo que permite desplazamientos de 0 a 31 bits.
+La operación es equivalente a multiplicar por 2 el valor del operando destino
+tantas veces como indica el operando fuente.</h3></p>
+<p class="parrafo"><h3>EJEMPLO:</h3></p>
+<p class="parrafo"><h5>SAL RAX,1</h5></p>
+
+<h2>6.29. SAR: desplazamiento aritmético a la derecha</h2>
+<p class="parrafo"><h3>Lleva a cabo un desplazamiento a la derecha de los bits del operando destino;
+desplaza tantos bits como indica el operando fuente.
+<br>
+Los bits pasan de la posición que ocupan a la posición de su derecha; el bit de
+signo (el bit más significativo) se va copiando a las posiciones de la derecha;
+el bit menos significativo se copia al bit de transporte (CF).
+<br>
+El operando fuente solo puede ser un valor inmediato de 8 bits o el registro CL.
+Si el operando destino es de 64 bits, se enmascaran los dos bits de más peso
+del operando fuente, lo que permite desplazamientos de 0 a 63 bits.
+<br>
+Si el operando destino es de 32 bits o menos, se enmascaran los tres bits de
+más peso del operando fuente, lo que permite desplazamientos de 0 a 31 bits.
+La operación es equivalente a dividir por 2 el valor del operando destino tantas
+veces como indica el operando fuente.
+</h3></p>
+<p class="parrafo"><h3>EJEMPLO:</h3></p>
+<p class="parrafo"><h5>SAR RAX,1
+</h5></p>
+
+
+<!-- -->
+<h2>SBB: resta con transporte (borrow)</h2>
+<p class="parrafo"><h3>SBB destino, fuente</h3></p>
+<p class="parrafo"><h3>Lleva a cabo una resta considerando el valor del bit de transporte (CF). Se resta
+el valor del operando fuente del operando destino, a continuación se resta del
+resultado el valor de CF y el resultado final de la operación se guarda sobre
+el operando destino sobreescribiendo el valor inicial. El valor del operando
+fuente no se modifica.</h3></p>
+<p class="parrafo"><h3>Operación</h3></p>
+<p class="parrafo"><h3>destino = destino – fuente – CF</h3></p>
+<p class="parrafo"><h3>Bits de resultado modificados</h3></p>
+<p class="parrafo"><h3>OF, SF, ZF, AF, PF, CF</h3></p>
+<p class="parrafo"><h3>El bit de resultado CF toma el valor 1 si el resultado de la operación es negativo;
+el resto de los bits de resultado se modifican según el resultado de la operación.</h3></p>
+<p class="parrafo"><h3>Formatos válidos</h3></p>
+<p class="parrafo"><h3>SBB reg, reg</h3></p>
+<p class="parrafo"><h3>SBB reg, tamaño mem</h3></p>
+<p class="parrafo"><h3>SBB tamaño mem, reg</h3></p>
+<p class="parrafo"><h3>Los dos operandos han de ser del mismo tamaño.</h3></p>
+<p class="parrafo"><h3>SBB reg, imm</h3></p>
+<p class="parrafo"><h3>SBB tamaño mem, imm</h3></p>
+<p class="parrafo"><h3>El tamaño del inmediato puede ir desde 8 bits hasta el tamaño del primer
+operando, como máximo 32 bits.</h3></p>
+<p class="parrafo"><h3>Ejemplos</h3></p>
+<p class="parrafo"><h3>SBB R9,RAX</h3></p>
+<p class="parrafo"><h3>SBB RAX, QWORD [variable]</h3></p>
+<p class="parrafo"><h3>SBB DWORD [variable],EAX</h3></p>
+<p class="parrafo"><h3>SBB RAX,0x01020304</h3></p>
+<p class="parrafo"><h3>SBB BYTE [vector+RAX], 5</h3></p>
+
+
+<h2>SHL: desplazamiento lógico a la izquierda</h2>
+<p class="parrafo"><h3>Es equivalente al desplazamiento aritmético a la izquierda (podéis consultar
+la instrucción SAL).</h3></p>
+
+
+<h2> SHR: desplazamiento lógico a la derecha</h2>
+<p class="parrafo"><h3>SHR destino, fuente</h3></p>
+<p class="parrafo"><h3>Realiza un desplazamiento a la derecha de los bits del operando destino; desplaza tantos bits como indica el operando fuente.
+Los bits pasan de la posición que ocupan a la posición de su derecha, el bit
+menos significativo se copia en el bit de transporte (CF) y se van añadiendo
+ceros a la izquierda.</h3></p>
+<p class="parrafo"><h3>El operando fuente solo puede ser un valor inmediato de 8 bits o el registro CL.</h3></p>
+<p class="parrafo"><h3>Bits de resultado modificados</h3></p>
+<p class="parrafo"><h3>OF, SF, ZF, PF, CF</h3></p>
+<p class="parrafo"><h3>CF recibe el valor del bit menos significativo del operando destino, cada vez
+que se desplaza un bit.</h3></p>
+<p class="parrafo"><h3>Si el operando fuente vale 1, OF se actualiza con el resultado de la XOR de
+los dos bits más significativos del resultado; en cualquier otro caso, OF queda
+indefinido.</h3></p>
+<p class="parrafo"><h3>El resto de los bits se modifican según el resultado de la operación.</h3></p>
+<p class="parrafo"><h3>Formatos válidos</h3></p>
+<p class="parrafo"><h3>SHR reg, CL</h3></p>
+<p class="parrafo"><h3>SHR reg, imm8</h3></p>
+<p class="parrafo"><h3>SHR tamaño mem, CL</h3></p>
+<p class="parrafo"><h3>SHR tamaño mem, imm8</h3></p>
+<p class="parrafo"><h3>Ejemplos</h3></p>
+<p class="parrafo"><h3>SHR RAX,CL</h3></p>
+<p class="parrafo"><h3>SHR RAX,1</h3></p>
+<p class="parrafo"><h3>SHR DWORD [RBX],CL</h3></p>
+<p class="parrafo"><h3>SHR QWORD [variable],4</h3></p>
+
+
+
+
+<!-- -->
+
+
+<h2> SUB: resta sin transporte</h2>
+<p class="parrafo"><h3>SUB destino, fuente</h3></p>
+<p class="parrafo"><h3>Lleva a cabo una resta sin considerar el valor del bit de transporte (CF). Se resta
+el valor del operando fuente del operando destino, el resultado de la operación
+se guarda sobre el operando destino sobreescribiendo el valor inicial. El valor
+del operando fuente no se modifica.</h3></p>
+<p class="parrafo"><h3>Operación</h3></p>
+<p class="parrafo"><h3>destino = destino – fuente</h3></p>
+<p class="parrafo"><h3>Bits de resultado modificados</h3></p>
+<p class="parrafo"><h3>OF, SF, ZF, AF, PF, CF</h3></p>
+<p class="parrafo"><h3>El bit de resultado SF toma el valor 1 si el resultado de la operación es negativo;
+el resto de los bits de resultado se modifican según el resultado de la operación.</h3></p>
+<p class="parrafo"><h3>Formatos válidos</h3></p>
+<p class="parrafo"><h3>SUB reg, reg</h3></p>
+<p class="parrafo"><h3>SUB reg, tamaño mem</h3></p>
+<p class="parrafo"><h3>SUB tamaño mem, reg</h3></p>
+<p class="parrafo"><h3>Los dos operandos han de ser del mismo tamaño.</h3></p>
+<p class="parrafo"><h3>SUB reg, imm</h3></p>
+<p class="parrafo"><h3>SUB tamaño mem, imm</h3></p>
+<p class="parrafo"><h3>El tamaño del inmediato puede ir desde 8 bits hasta el tamaño del primer
+operando, como máximo 32 bits.</h3></p>
+<p class="parrafo"><h3>Ejemplos</h3></p>
+<p class="parrafo"><h3>SUB R9,RAX</h3></p>
+<p class="parrafo"><h3>SUB RAX, QWORD [variable]</h3></p>
+<p class="parrafo"><h3>SUB DWORD [variable],EAX</h3></p>
+<p class="parrafo"><h3>SUB RAX,0x01020304</h3></p>
+<p class="parrafo"><h3>SUB BYTE [vector+RAX], 5</h3></p>
+
+
+<h2>TEST: comparación lógica</h2>
+<p class="parrafo"><h3>TEST destino, fuente</h3></p>
+<p class="parrafo"><h3>Realiza una operación lógica 'y' bit a bit entre los dos operandos sin modificar
+el valor de ninguno de los operandos; actualiza los bits de resultado según el
+resultado de la 'y' lógica.</h3></p>
+<p class="parrafo"><h3>Operación</h3></p>
+<p class="parrafo"><h3>destino AND fuente</h3></p>
+<p class="parrafo"><h3>Bits de resultado modificados</h3></p>
+<p class="parrafo"><h3>OF, SF, ZF, AF, PF, CF</h3></p>
+<p class="parrafo"><h3>Los bits de resultado CF y OF toman el valor 0, el resto de los bits de resultado
+se modifican según el resultado de la operación.</h3></p>
+<p class="parrafo"><h3>Formatos válidos</h3></p>
+<p class="parrafo"><h3>TEST reg, reg</h3></p>
+<p class="parrafo"><h3>TEST reg, tamaño mem</h3></p>
+<p class="parrafo"><h3>TEST tamaño mem, reg</h3></p>
+<p class="parrafo"><h3>Los dos operandos han de ser del mismo tamaño.</h3></p>
+<p class="parrafo"><h3>TEST reg, imm</h3></p>
+<p class="parrafo"><h3>TEST tamaño mem, imm</h3></p>
+<p class="parrafo"><h3>El tamaño del inmediato puede ir desde 8 bits hasta el tamaño del primer
+operando, como máximo 32 bits.</h3></p>
+<p class="parrafo"><h3>Ejemplos</h3></p>
+<p class="parrafo"><h3>TEST R9,RAX</h3></p>
+<p class="parrafo"><h3>TEST RAX, QWORD [variable]</h3></p>
+<p class="parrafo"><h3>TEST DWORD [variable],EAX</h3></p>
+<p class="parrafo"><h3>TEST RAX,0x01020304</h3></p>
+<p class="parrafo"><h3>TEST BYTE [vector+RAX], 5</h3></p>
+
+
+<h2> XCHG: intercambio de operandos</h2>
+<p class="parrafo"><h3>XCHG destino, fuente</h3></p>
+<p class="parrafo"><h3>Se lleva a cabo un intercambio entre los valores de los dos operandos. El operando destino toma el valor del operando fuente, y el operando fuente toma
+el valor del operando destino.</h3></p>
+<p class="parrafo"><h3>No se puede especificar el mismo operando como fuente y destino, ni ninguno
+de los dos operandos puede ser un valor inmediato.</h3></p>
+<p class="parrafo"><h3>Bits de resultado modificados</h3></p>
+<p class="parrafo"><h3>No se modifica ningún bit de resultado.</h3></p>
+<p class="parrafo"><h3>Formatos válidos</h3></p>
+<p class="parrafo"><h3>XCHG reg, reg</h3></p>
+<p class="parrafo"><h3>XCHG reg, tamaño mem</h3></p>
+<p class="parrafo"><h3>XCHG tamaño mem, reg</h3></p>
+<p class="parrafo"><h3>Los dos operandos han de ser del mismo tamaño.</h3></p>
+<p class="parrafo"><h3>Ejemplos</h3></p>
+<p class="parrafo"><h3>XCHG R9, RAX</h3></p>
+<p class="parrafo"><h3>XCHG RAX, QWORD [variable]</h3></p>
+<p class="parrafo"><h3>XCHG DWORD [variable], EAX</h3></p>
+
+
+<h2> XOR: o exclusiva</h2>
+<p class="parrafo"><h3>XOR destino, fuente</h3></p>
+<p class="parrafo"><h3>Realiza una operación lógica XOR ('o exclusiva') bit a bit entre el operando
+destino y el operando fuente; el resultado de la operación se guarda sobre
+el operando destino sobreescribiendo el valor inicial. El valor del operando
+fuente no se modifica.</h3></p>
+<p class="parrafo"><h3>Se lleva a cabo una operación XOR entre el bit n del operando destino y el bit
+n del operando fuente según la tabla de verdad de la función XOR:</h3></p>
+<p class="parrafo"><h3>x y x XOR y</h3></p>
+<p class="parrafo"><h3>--- --- -------</h3></p>
+<p class="parrafo"><h3>0 0 0</h3></p>
+<p class="parrafo"><h3>0 1 1</h3></p>
+<p class="parrafo"><h3>1 0 1</h3></p>
+<p class="parrafo"><h3>1 1 0</h3></p>
+<p class="parrafo"><h3>Operación</h3></p>
+<p class="parrafo"><h3>destino = destino XOR fuente</h3></p>
+<p class="parrafo"><h3>Bits de resultado modificados</h3></p>
+<p class="parrafo"><h3>OF=0, SF, ZF, PF, CF=0</h3></p>
+<p class="parrafo"><h3>Los indicadores OF y CF se ponen a 0; el resto de los indicadores se modifican</h3></p>
+<p class="parrafo"><h3>según el resultado de la operación.</h3></p>
+<p class="parrafo"><h3>Formatos válidos</h3></p>
+<p class="parrafo"><h3>XOR reg,reg</h3></p>
+<p class="parrafo"><h3>XOR reg,tamaño mem</h3></p>
+<p class="parrafo"><h3>XOR tamaño mem,reg</h3></p>
+<p class="parrafo"><h3>Los dos operandos han de ser del mismo tamaño.</h3></p>
+<p class="parrafo"><h3>XOR reg,imm</h3></p>
+<p class="parrafo"><h3>XOR tamaño mem,imm</h3></p>
+<p class="parrafo"><h3>El tamaño del inmediato puede ir desde 8 bits hasta el tamaño del primer
+operando, como máximo 32 bits.</h3></p>
+<p class="parrafo"><h3>Ejemplos</h3></p>
+<p class="parrafo"><h3>XOR R9, RAX</h3></p>
+<p class="parrafo"><h3>XOR RAX, QWORD [variable]</h3></p>
+<p class="parrafo"><h3>XOR DWORD [variable], EAX</h3></p>
+<p class="parrafo"><h3>XOR RAX, 01020304 h</h3></p>
+<p class="parrafo"><h3>XOR BYTE [vector+RAX], 5</h3></p>
+
+<!-- -->
+</div>
+</div>
+</div>
+   </div>
+   </div>
+   </div>
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    -->
+  </body>
+</html>
